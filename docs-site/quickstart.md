@@ -40,8 +40,8 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="https://atomflow.vip/register" target="_blank" rel="noopener noreferrer">注册入口</a>
-      <a class="td-btn" href="https://atomflow.vip/login" target="_blank" rel="noopener noreferrer">登录入口</a>
+      <a class="td-btn td-btn--primary" href="@TD_REGISTER_URL@" target="_blank" rel="noopener noreferrer">注册入口</a>
+      <a class="td-btn" href="@TD_LOGIN_URL@" target="_blank" rel="noopener noreferrer">登录入口</a>
       <a class="td-flow-inline-link" href="./settings/user/auth">用户指南 · 登录注册</a>
     </div>
     <div class="td-flow-shots" role="group" aria-label="控制台注册与登录界面参考">
@@ -67,7 +67,7 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="https://atomflow.vip/console/topup" target="_blank" rel="noopener noreferrer">充值入口</a>
+      <a class="td-btn td-btn--primary" href="@TD_CONSOLE@/topup" target="_blank" rel="noopener noreferrer">充值入口</a>
       <a class="td-flow-inline-link" href="./settings/user/topup">用户指南 · 钱包管理</a>
     </div>
     <div class="td-flow-shots td-flow-shots--single" role="group" aria-label="控制台钱包与充值界面参考">
@@ -89,7 +89,7 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="https://atomflow.vip/console/token" target="_blank" rel="noopener noreferrer">令牌管理</a>
+      <a class="td-btn td-btn--primary" href="@TD_CONSOLE@/token" target="_blank" rel="noopener noreferrer">令牌管理</a>
       <a class="td-flow-inline-link" href="./settings/user/token">用户指南 · 令牌管理</a>
       <a class="td-flow-inline-link" href="./api/">API 参考</a>
     </div>
@@ -114,7 +114,7 @@ aside: false
     <p>在终端用 cURL 调用 <code>/v1/chat/completions</code>，将 <code>Authorization</code> 中的密钥换成你在上一步创建的令牌即可。</p>
     <div class="td-code-panel">
       <div class="td-code-panel__bar"><span>示例 · cURL</span></div>
-      <pre><code>curl https://atomflow.vip/v1/chat/completions \
+      <pre><code>curl @TD_GATEWAY_V1@/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-your-api-key" \
   -d '{"model":"gpt-5.4-mini","messages":[{"role":"user","content":"Hello!"}]}'</code></pre>

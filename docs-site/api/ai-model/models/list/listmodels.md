@@ -10,7 +10,7 @@ outline: false
 
 > 列出当前令牌可见的全部可用模型，便于在发起对话、补全、绘图等请求前做发现与筛选。
 
-桌面端可在 **右侧栏** 切换 **cURL / Python / JavaScript / Go / PHP** 请求示例，并一键复制 **Response** JSON（网关地址以正文 `atomflow.vip` 为准）。
+桌面端可在 **右侧栏** 切换 **cURL / Python / JavaScript / Go / PHP** 请求示例，并一键复制 **Response** JSON（网关地址以正文 `@TD_DOMAIN_LABEL@` 为准）。
 
 下列约定以 **OpenAI 兼容** `GET /v1/models` 为主；**具体字段与查询参数是否出现，以你所接入的网关实际响应为准**（部分实现会包含更多扩展键）。
 
@@ -20,7 +20,7 @@ outline: false
 | 路径 | `/v1/models` |
 | 认证 | `Authorization: Bearer <token>` |
 
-下文示例以 `https://atomflow.vip` 为网关根地址；自建部署请替换为你的 API 根 URL。
+下文示例以 `@TD_MAIN_SITE@` 为网关根地址；自建部署请替换为你的 API 根 URL。
 
 ## 认证
 
@@ -72,7 +72,7 @@ Authorization: Bearer sk-your-api-key
 带查询参数的示例：
 
 ```bash
-curl -sS "https://atomflow.vip/v1/models?provider=openai" \
+curl -sS "@TD_GATEWAY_V1@/models?provider=openai" \
   -H "Authorization: Bearer sk-your-api-key"
 ```
 

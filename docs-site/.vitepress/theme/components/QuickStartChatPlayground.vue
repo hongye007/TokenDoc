@@ -1,7 +1,8 @@
 <script setup lang="ts">
+/// <reference path="../../brand-globals.d.ts" />
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
-const API_URL = "https://atomflow.vip/v1/chat/completions";
+const API_URL = `${__TD_GATEWAY_V1__}/chat/completions`;
 
 const open = ref(false);
 const token = ref("");

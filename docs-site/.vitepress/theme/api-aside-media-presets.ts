@@ -1,4 +1,6 @@
-const H = "https://atomflow.vip/v1";
+/// <reference path="../brand-globals.d.ts" />
+
+const H = __TD_GATEWAY_V1__;
 
 type MediaAsideLang = "curl" | "python" | "javascript" | "go" | "php";
 

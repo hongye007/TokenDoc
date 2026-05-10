@@ -1,0 +1,5 @@
+/**
+ * 微词元品牌：在 palette.css 之后加载。
+ * 构建 DOC_BRAND=minitoken 时，根节点会带 data-doc-brand="minitoken"，可在此写覆盖样式，例如：
+ * html[data-doc-brand="minitoken"] { --td-p-brand: #0066cc; }
+ */

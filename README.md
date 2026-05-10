@@ -1,6 +1,6 @@
 # TokenDoc
 
-**AtomFlow 文档站** — 基于 [VitePress](https://vitepress.dev/) 的静态文档与 API 参考。内容包含平台介绍、极速入门、用户指南、OpenAI 兼容 API 说明、常见问题，以及可内嵌的独立页（关于我们、隐私政策、用户协议等）。
+基于 [VitePress](https://vitepress.dev/) 的多品牌静态文档站（默认 **AtomFlow**，可选 **微词元 / minitoken**）。内容包含平台介绍、极速入门、用户指南、OpenAI 兼容 API 说明、常见问题，以及可内嵌的独立页（关于我们、隐私政策、用户协议等）。
 
 - 在线文档（部署后）：例如 `https://doc.atomflow.vip`（按你的实际域名）
 - 源码仓库：<https://github.com/hongye007/TokenDoc>
@@ -24,10 +24,14 @@ npm ci
 
 | 命令 | 说明 |
 |------|------|
-| `npm run docs:dev` | 本地开发预览（默认 <http://localhost:5173>） |
-| `npm run docs:build` | 生产构建，输出 **`docs-site/.vitepress/dist/`** |
-| `npm run docs:preview` | 本地预览构建结果 |
+| `npm run docs:dev` | 本地开发预览（默认 <http://localhost:5173>），未设置 `DOC_BRAND` 时等同 **atomflow** |
+| `npm run docs:build` | 生产构建；未设置 `DOC_BRAND` 时输出 **`docs-site/.vitepress/dist-atomflow/`** |
+| `npm run docs:build:atomflow` | 显式构建 AtomFlow 品牌 → `dist-atomflow/` |
+| `npm run docs:build:minitoken` | 构建微词元品牌 → `dist-minitoken/` |
+| `npm run docs:preview` | 预览（需已用**同一** `DOC_BRAND` 构建过；默认预览 atomflow 对应产物） |
 | `npm run docs:patch` | 对已有 Markdown 做路径反引号与 `<占位符>` 转义（构建报错时可再执行） |
+
+环境变量 **`DOC_BRAND`**：`atomflow`（默认）或 `minitoken`。每个品牌在 **`docs-site/.vitepress/brands.ts`** 中维护：**Logo**、**展示名**、**`mainSiteUrl`（正文占位符与 API 示例基址）**、**`portalUrl`（顶栏「主站入口」，缺省同 mainSiteUrl；勿填第三方文档站）**、**关于页/首页截图 URL**、**主题色**、顶栏标题 HTML、页脚文案等。正文 Markdown 使用 **`@TD_MAIN_SITE@`**、**`@TD_REGISTER_URL@`**、**`@TD_GATEWAY_V1@`**、**`@TD_BRAND_DISPLAY@`** 等占位符（构建时按品牌替换）；新增品牌在该文件扩展并同步更新 GitHub Actions 矩阵即可。
 
 ---
 
@@ -36,54 +40,57 @@ npm ci
 | 路径 | 说明 |
 |------|------|
 | `docs-site/` | VitePress **文档根**（`config.mts`、主题、Markdown 正文） |
-| `docs-site/.vitepress/` | 主题（`theme/`）、配置 `config.mts` |
+| `docs-site/.vitepress/` | 主题（`theme/`）、`config.mts`、**`brands.ts`（多品牌）** |
 | `docs-site/settings/` | 用户指南 Markdown |
 | `docs-site/api/` | API 参考 Markdown |
 | `docs-site/public/` | 静态资源；根路径下独立 HTML（如法律页、关于我们独立导出）会原样复制到 `dist/` |
 | `scripts/` | 维护用 Node 脚本（如 `docs:patch`） |
 
-侧栏「API 参考」下分组与 `docs-site/api/ai-model/` 等路径由 **`docs-site/.vitepress/config.mts`** 维护；顶栏「主站入口」链接为配置项 **`MAIN_SITE_URL`**（请改为你的门户，如 `https://atomflow.vip`）。
+侧栏「API 参考」下分组与 `docs-site/api/ai-model/` 等路径由 **`docs-site/.vitepress/config.mts`** 维护；顶栏 Logo、**「主站入口」（`navPortalOrigin` → `portalUrl` 或 `mainSiteUrl`）**、站点标题、页脚合规文案、**`themeConfig.tdBrand`** 等按 **`DOC_BRAND`** 从 **`brands.ts`** 读取。主题内请求示例（右侧栏 cURL 等）通过构建常量 **`__TD_GATEWAY_V1__`**（来自 `mainSiteUrl`）与当前品牌对齐。
 
 ---
 
 ## 生产部署（静态站）
 
-构建产物目录：
+构建产物目录（**与 `DOC_BRAND` 对应**，互不覆盖）：
 
 ```text
-docs-site/.vitepress/dist/
+docs-site/.vitepress/dist-atomflow/
+docs-site/.vitepress/dist-minitoken/
 ```
 
-将该目录内容部署到任意静态托管（Nginx、Caddy、OSS + CDN、Netlify、Cloudflare Pages 等）。文档子域示例：`doc.atomflow.vip` 的站点根指向 **`dist` 内带 `index.html` 的那一层**，HTTPS 由证书或平台托管即可。
+将**对应品牌**目录内容部署到目标域名站点根（内含 `index.html`）。例如 AtomFlow 文档子域指向 `dist-atomflow`，微词元指向 `dist-minitoken`。
 
-### GitHub Actions → `gh-pages` 分支（服务器无 Node）
+### GitHub Actions → `gh-pages-<品牌>` 分支（服务器无 Node）
 
-仓库已配置 [`.github/workflows/gh-pages.yml`](.github/workflows/gh-pages.yml)：向 **`main`** 推送（或手动 **Run workflow**）时，会在 GitHub 上执行 `npm ci` 与 `npm run docs:build`，并把 **`docs-site/.vitepress/dist/`** 推送到 **`gh-pages`** 分支（与源码 `main` 分离）。
+[`.github/workflows/gh-pages.yml`](.github/workflows/gh-pages.yml) 使用 **matrix**：对每个 `DOC_BRAND` 执行 `npm run docs:build`，并把产物推送到：
 
-1. 在 GitHub 仓库 **Settings → Actions → General** 中确认 **Workflow permissions** 为「Read and write permissions」（否则无法推送 `gh-pages`）。
-2. 将含本 Workflow 的提交推送到 **`main`**，在仓库 **Actions** 中确认 **Publish static site to gh-pages** 已成功（首次成功后才会出现 **`gh-pages`** 分支）。
-3. 在服务器站点目录克隆静态分支（根目录即网站根，含 `index.html`）：
+| 分支 | 品牌 |
+|------|------|
+| `gh-pages-atomflow` | AtomFlow |
+| `gh-pages-minitoken` | 微词元 |
+
+1. 仓库 **Settings → Actions → General**：**Workflow permissions** 选「Read and write permissions」。
+2. 推送 **`main`** 后，在 **Actions** 中确认两个 job 均成功，分支列表中出现 **`gh-pages-atomflow`** 与 **`gh-pages-minitoken`**。
+3. 服务器分别克隆（示例）：
 
 ```bash
-git clone -b gh-pages --single-branch https://github.com/hongye007/TokenDoc.git /var/www/doc.atomflow.vip
+git clone -b gh-pages-atomflow --single-branch https://github.com/hongye007/TokenDoc.git /var/www/doc.atomflow.vip
+git clone -b gh-pages-minitoken --single-branch https://github.com/hongye007/TokenDoc.git /var/www/doc.minitoken.vip
 ```
 
-4. 之后每次推送 `main` 且 Workflow 成功后，在服务器执行：
+4. 更新：`cd <站点目录> && git pull`。
 
-```bash
-cd /var/www/doc.atomflow.vip && git pull
-```
-
-若仓库为私有，服务器需配置 [Deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys) 或使用 HTTPS + [fine-grained token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) 拉取。
+若仓库为私有，服务器需 [Deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys) 或 HTTPS + [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)。
 
 ---
 
-示例（服务器上本地构建并发布）：
+示例（本机构建后 rsync，指定品牌）：
 
 ```bash
 npm ci
-npm run docs:build
-rsync -a --delete docs-site/.vitepress/dist/ /var/www/doc.atomflow.vip/
+DOC_BRAND=minitoken npm run docs:build
+rsync -a --delete docs-site/.vitepress/dist-minitoken/ /var/www/doc.minitoken.vip/
 ```
 
 ---

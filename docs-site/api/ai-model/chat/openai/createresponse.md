@@ -18,7 +18,7 @@ outline: false
 | 路径 | `/v1/responses` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关：`https://atomflow.vip/v1`。
+示例网关：`@TD_GATEWAY_V1@`。
 
 ## Request Body
 - **`model`**：模型 ID。  

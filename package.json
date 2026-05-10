@@ -11,6 +11,8 @@
     "docs:patch": "node scripts/patch-markdown-paths.mjs",
     "docs:dev": "vitepress dev docs-site",
     "docs:build": "vitepress build docs-site",
+    "docs:build:atomflow": "DOC_BRAND=atomflow vitepress build docs-site",
+    "docs:build:minitoken": "DOC_BRAND=minitoken vitepress build docs-site",
     "docs:preview": "vitepress preview docs-site"
   },
   "keywords": [],

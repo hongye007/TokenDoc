@@ -18,7 +18,7 @@ outline: false
 | 路径 | `/v1/models/{model}` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关根：`https://atomflow.vip/v1`（请替换为你的部署地址）。
+示例网关根：`@TD_GATEWAY_V1@`（请替换为你的部署地址）。
 
 ## 路径参数
 

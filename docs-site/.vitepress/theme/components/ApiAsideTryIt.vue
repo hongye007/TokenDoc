@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/// <reference path="../../brand-globals.d.ts" />
 import { useData, useRoute } from "vitepress";
 import { computed, onUnmounted, ref, watch } from "vue";
 import { resolveAsidePreset, type AsideLang } from "../api-aside-presets";
@@ -54,7 +55,7 @@ async function copyText(text: string, kind: "req" | "res") {
 }
 
 const defaultApiBase = computed(
-  () => (frontmatter.value.apiBaseUrl ?? "https://atomflow.vip/v1").toString().replace(/\/$/, ""),
+  () => (frontmatter.value.apiBaseUrl ?? __TD_GATEWAY_V1__).toString().replace(/\/$/, ""),
 );
 
 const fmAside = computed(() => frontmatter.value.apiAside);

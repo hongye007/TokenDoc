@@ -1,10 +1,32 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import type { Plugin } from "vite";
 import { defineConfig } from "vitepress";
 import type { DefaultTheme } from "vitepress";
+import {
+  applyBrandPlaceholdersToMarkdown,
+  buildBrandThemeStyleCss,
+  navPortalOrigin,
+  resolveBrand,
+  trimOrigin,
+  type BrandProfile,
+} from "./brands";
 
-/** 主站入口（顶栏）；请改为你的正式门户地址。 */
-const MAIN_SITE_URL = "https://www.newapi.ai/zh";
+const brand = resolveBrand(process.env.DOC_BRAND);
+
+function tdBrandMarkdownPlugin(b: BrandProfile, docsRootAbs: string): Plugin {
+  const rootNorm = path.resolve(docsRootAbs).split(path.sep).join("/");
+  return {
+    name: "td-brand-md-placeholders",
+    enforce: "pre",
+    transform(code, id) {
+      if (!id.endsWith(".md")) return null;
+      const idNorm = id.split(path.sep).join("/");
+      if (idNorm !== rootNorm && !idNorm.startsWith(`${rootNorm}/`)) return null;
+      return applyBrandPlaceholdersToMarkdown(code, b);
+    },
+  };
+}
 
 /** API docs use angle-bracket placeholders like `<token>`; Vue otherwise treats them as components. */
 const DOC_PLACEHOLDER_TAGS = new Set([
@@ -52,14 +74,9 @@ function apiAiModelItem(
   return { text, link: `/api/ai-model/${route}` };
 }
 
-/** 侧栏「音频」分组：false 为暂时隐藏（页面路径仍可直接访问） */
+/** 侧栏「音频」分组：false 为暂时隐藏 */
 const sidebarShowAudio = false;
 
-/**
- * API 参考二级目录：按开放路径能力分组（与 `/v1/chat/completions` 等路径对齐）。
- * 「文本」下含聊天补全、Responses、Claude Messages、Embedding、Rerank。
- * 「图像」等为精简后的 OpenAI 兼容能力分组；视频与其它接口侧栏项已暂时移除（旧页面文件仍可保留在仓库）。
- */
 const apiAudioSection: DefaultTheme.SidebarItem = {
   text: "音频",
   collapsed: true,
@@ -102,7 +119,6 @@ const apiItems: DefaultTheme.SidebarItem[] = [
   ...(sidebarShowAudio ? [apiAudioSection] : []),
 ];
 
-/** 「用户指南」侧栏条目（内容由 npm run docs:sync 写入 /settings/；不含「概述」页） */
 const settingsSidebarItems: DefaultTheme.SidebarItem[] = [
   { text: "登陆注册", link: "/settings/user/auth" },
   { text: "个人设置", link: "/settings/user/personal-setting" },
@@ -113,10 +129,7 @@ const settingsSidebarItems: DefaultTheme.SidebarItem[] = [
   { text: "任务日志", link: "/settings/user/task" },
 ];
 
-/** 侧栏「常见问题」入口：false 为暂时隐藏 */
 const sidebarShowFaq = true;
-
-/** 顶栏右侧 GitHub 图标链接：false 为暂时隐藏 */
 const navShowGithubSocial = false;
 
 const docSidebar: DefaultTheme.SidebarItem[] = [
@@ -137,15 +150,28 @@ const docSidebar: DefaultTheme.SidebarItem[] = [
 
 const sidebarForDocs: DefaultTheme.Sidebar = docSidebar;
 
-/** 顶栏左侧 logo（右侧主导航仍为「平台文档」文案） */
-const SITE_BRAND_MARK = "https://i.imgur.com/iOhm0Zv.png";
+const themeColorDark = brand.theme.themeColorDark ?? "#08132a";
+const themeColorLight = brand.theme.themeColorLight ?? "#ffffff";
 
 export default defineConfig({
-  title: "平台文档",
-  description: "API 网关文档：介绍、入门、设置与 API 参考",
+  title: brand.docTitle,
+  description: brand.metaDescription,
+  /** 多品牌产物分目录，避免互相覆盖 */
+  outDir: path.join(SITE, `.vitepress/dist-${brand.id}`),
+  transformHtml(code) {
+    if (!code.includes("<html")) {
+      return code;
+    }
+    return code.replace(/<html\b/i, `<html data-doc-brand="${brand.id}"`);
+  },
+  transformHead() {
+    const css = buildBrandThemeStyleCss(brand);
+    if (!css) return [];
+    return [["style", {}, css]];
+  },
   head: [
-    ["meta", { name: "theme-color", content: "#08132a", media: "(prefers-color-scheme: dark)" }],
-    ["meta", { name: "theme-color", content: "#ffffff", media: "(prefers-color-scheme: light)" }],
+    ["meta", { name: "theme-color", content: themeColorDark, media: "(prefers-color-scheme: dark)" }],
+    ["meta", { name: "theme-color", content: themeColorLight, media: "(prefers-color-scheme: light)" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
       "link",
@@ -169,17 +195,27 @@ export default defineConfig({
       },
     },
   },
+  vite: {
+    define: {
+      __TD_GATEWAY_V1__: JSON.stringify(`${trimOrigin(brand.mainSiteUrl)}/v1`),
+      __TD_MAIN_SITE__: JSON.stringify(trimOrigin(brand.mainSiteUrl)),
+    },
+    plugins: [tdBrandMarkdownPlugin(brand, SITE)],
+  },
   themeConfig: {
-    /** 左侧：图标 + Doc；右侧菜单首项仍为「平台文档」 */
-    logo: SITE_BRAND_MARK,
-    siteTitle: '<span class="td-nav-site-title-doc">AtomFlow 文档系统</span>',
+    logo: brand.logo,
+    siteTitle: brand.siteTitleHtml,
     sidebarMenuLabel: "文档目录",
     nav: [
       { text: "平台文档", link: "/", activeMatch: "^/(?!contact)" },
       { text: "关于我们", link: "/contact" },
-      { text: "主站入口", link: MAIN_SITE_URL, target: "_blank", rel: "noopener noreferrer" },
+      {
+        text: "主站入口",
+        link: navPortalOrigin(brand),
+        target: "_blank",
+        rel: "noopener noreferrer",
+      },
     ],
-    /** 文档区统一左侧目录；关于我们页为独立 page 布局，不渲染侧栏 */
     sidebar: {
       "/": sidebarForDocs,
       "/quickstart": sidebarForDocs,
@@ -194,6 +230,17 @@ export default defineConfig({
     outline: {
       level: [2, 3],
       label: "本页目录",
+    },
+    tdBrand: {
+      id: brand.id,
+      footerLegalText: brand.footerLegalText,
+      footerCopyright: brand.footerCopyright,
+      displayName: brand.displayName,
+      mainSiteUrl: trimOrigin(brand.mainSiteUrl),
+      portalUrl: navPortalOrigin(brand),
+      registerUrl: `${trimOrigin(brand.mainSiteUrl)}/register`,
+      supportEmail: brand.supportEmail,
+      logo: brand.logo,
     },
   },
 });

@@ -27,13 +27,13 @@ pageClass: td-contact-page
       <div class="td-contact__story">
         <h2 id="td-contact-story">品牌故事</h2>
         <div class="td-contact__prose">
-          <p>AtomFlow（原流）源于一个简单的发现：AI 创新的最大障碍不在于缺乏想法，而在于基础设施的碎片化。在不同的集群中获取高性能算力过去一直是一个手动且容易出错的瓶颈。</p>
+          <p>@TD_BRAND_DISPLAY@ 源于一个简单的发现：AI 创新的最大障碍不在于缺乏想法，而在于基础设施的碎片化。在不同的集群中获取高性能算力过去一直是一个手动且容易出错的瓶颈。</p>
           <p>我们着手构建一个将基础设施视为代码、将算力视为流动商品的平台。从统一的 API 网关到可观测与配额管理，我们致力于在大规模环境下处理负载均衡、延迟优化与安全保障。</p>
         </div>
       </div>
       <figure class="td-contact__figure">
         <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwTKOBz__1IernRXQXk-SCLJkfBmIunImEJXFbJBg4lG934jFFyafBD4M7zOn2Un00HD5-8tXsL-yFOxvhCbr7KKFA7hA_UNZc4ph-ka0twjdLQ4K_kT7llSu89nQcLpou0bs1Xi7uK4uB6bV0lcCVBicDZa7GmVCkmDNJqds5sgnv7266jmRN23v4vZqQqvsiqumWx_wJB5lcU_ewpMNwo6iQF1Bx6c0pRitHdwvSJUb9hQGSElM3W0sK1A6lKUrNqq5wHZEniSQ"
+          src="@TD_SCREENSHOT_CONTACT@"
           width="960"
           height="540"
           alt="高密度机柜与数据线缆的特写示意，代表 AI 算力基础设施"
@@ -81,13 +81,13 @@ pageClass: td-contact-page
   <div class="td-contact__inner td-contact__channels">
     <h2 id="td-contact-ch">联系我们</h2>
     <div class="td-contact__channel-row">
-      <a class="td-contact__channel" href="mailto:atomflow.vip@gmail.com">
+      <a class="td-contact__channel" href="mailto:@TD_SUPPORT_EMAIL@">
         <div class="td-contact__channel-icon">
           <span class="td-icon" aria-hidden="true">mail</span>
         </div>
         <div class="td-contact__channel-text">
           <span class="td-contact__channel-k">官方邮箱</span>
-          <span class="td-contact__channel-v">atomflow.vip@gmail.com</span>
+          <span class="td-contact__channel-v">@TD_SUPPORT_EMAIL@</span>
         </div>
       </a>
       <div class="td-contact__channel" role="group" aria-label="QQ 客服群">

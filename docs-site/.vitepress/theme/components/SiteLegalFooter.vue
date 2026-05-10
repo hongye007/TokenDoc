@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import { withBase } from "vitepress";
+import { useData, withBase } from "vitepress";
+
+const { theme } = useData();
+
+type TdBrandTheme = {
+  id: string;
+  footerLegalText: string;
+  footerCopyright: string;
+};
+
+const tdBrand = computed(() => (theme.value as { tdBrand?: TdBrandTheme }).tdBrand);
 
 type LegalKind = "privacy" | "terms" | null;
 
@@ -114,10 +124,10 @@ onUnmounted(() => {
     </div>
     <div class="td-lp-new__legal">
       <p>
-        AtomFlow（原流）致力于为合法合规的业务需求提供技术基础设施。用户在使用本服务时必须遵守当地法律法规。本平台不提供任何违反特定国家政策的非法访问途径。所有模型接口均通过官方正规渠道聚合，我们仅作为技术中间层提供优化加速与管理工具。如有任何疑问或合规需求，请联系我们的法务部门。
+        {{ tdBrand?.footerLegalText }}
       </p>
       <div class="td-lp-new__legal-links">
-        <span>© 2026 AtomFlow（原流）</span>
+        <span>{{ tdBrand?.footerCopyright }}</span>
         <button type="button" class="td-legal-footer-link" @click="openPrivacy">Privacy Policy</button>
         <button type="button" class="td-legal-footer-link" @click="openTerms">Terms of Service</button>
       </div>

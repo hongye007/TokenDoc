@@ -1,4 +1,6 @@
-/** 右侧「请求 / 响应」面板预设；正文 base_url 与文档一致（atomflow.vip）。 */
+/** 右侧「请求 / 响应」面板预设；网关 Base 与当前 `DOC_BRAND` 构建一致。 */
+
+/// <reference path="../brand-globals.d.ts" />
 
 import {
   CREATE_IMAGE_RESPONSE,
@@ -39,7 +41,7 @@ export const LIST_MODELS_RESPONSE = `{
   ]
 }`;
 
-const BASE = "https://atomflow.vip/v1";
+const BASE = __TD_GATEWAY_V1__;
 
 export const listModelsSnippets = {
   curl: `curl "${BASE}/models" \\
@@ -126,7 +128,7 @@ export type AsidePreset = { snippets: Record<AsideLang, string>; response: strin
 const HOST_V1 = BASE;
 
 /** Anthropic SDK：通常使用网关根，是否带 `/v1` 以 SDK 与网关约定为准。 */
-const ANTHROPIC_ORIGIN = "https://atomflow.vip";
+const ANTHROPIC_ORIGIN = __TD_MAIN_SITE__;
 
 export const GET_MODEL_RESPONSE = `{
   "id": "gpt-5.4",
@@ -779,7 +781,7 @@ export function normAsideRoute(p: string): string {
   return p.replace(/\.html$/, "").replace(/\/$/, "") || "/";
 }
 
-/** 与文档路由对应的右侧栏「请求 / 响应」预设（atomflow.vip）。 */
+/** 与文档路由对应的右侧栏「请求 / 响应」预设（网关与 `DOC_BRAND` 一致）。 */
 export function resolveAsidePreset(path: string): AsidePreset | null {
   const n = normAsideRoute(path);
   if (n === "/api/ai-model/models" || n.endsWith("/api/ai-model/models/list/listmodels")) {

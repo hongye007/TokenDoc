@@ -18,7 +18,7 @@ outline: false
 | 路径 | `/v1/embeddings` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关：`https://atomflow.vip/v1`。
+示例网关：`@TD_GATEWAY_V1@`。
 
 ## 请求体
 - **`model`**：Embedding 模型 ID（如 `text-embedding-3-small`）。  

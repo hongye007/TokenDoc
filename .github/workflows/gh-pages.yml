@@ -1,5 +1,4 @@
-# 在云端构建 VitePress，将静态产物推送到 gh-pages 分支。
-# 服务器无需 Node：在站点目录执行 git pull（跟踪 gh-pages）即可更新。
+# 多品牌：在云端分别构建并推送到 gh-pages-<brand> 分支（默认 atomflow、minitoken）。
 
 name: Publish static site to gh-pages
 
@@ -12,13 +11,16 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: gh-pages-deploy
-  cancel-in-progress: true
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        brand: [atomflow, minitoken]
+    concurrency:
+      group: gh-pages-${{ matrix.brand }}
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,11 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build VitePress
+      - name: Build VitePress (${{ matrix.brand }})
+        env:
+          DOC_BRAND: ${{ matrix.brand }}
         run: npm run docs:build
 
-      - name: Deploy to gh-pages branch
+      - name: Deploy to gh-pages-${{ matrix.brand }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs-site/.vitepress/dist
+          publish_dir: ./docs-site/.vitepress/dist-${{ matrix.brand }}
+          publish_branch: gh-pages-${{ matrix.brand }}

@@ -10,7 +10,7 @@ aside: false
 
 <header class="td-lp-new__header">
   <h1 class="td-lp-new__title">核心优势 <span class="td-lp-new__title-emoji" aria-hidden="true">🌟</span></h1>
-  <p class="td-lp-new__lead">AtomFlow（原流）为全球创作者打造的极致性能 API 基础设施。基于高可用架构设计，确保每一毫秒的延迟与每一分钱的投入都创造最高价值。</p>
+  <p class="td-lp-new__lead">@TD_BRAND_DISPLAY@ 为全球创作者打造的极致性能 API 基础设施。基于高可用架构设计，确保每一毫秒的延迟与每一分钱的投入都创造最高价值。</p>
 </header>
 
 <section class="td-lp-new__section" aria-labelledby="lp-svc">
@@ -23,7 +23,7 @@ aside: false
       <span class="td-icon td-lp-new__hero-icon" aria-hidden="true">redeem</span>
       <h3 class="td-lp-new__headline-lg">新用户礼遇</h3>
       <p class="td-lp-new__body-lg td-lp-new__muted">🎁 新用户注册送 <strong class="td-lp-new__primary-text">10 刀</strong> 消费额度</p>
-      <a class="td-lp-new__btn-primary" href="https://atomflow.vip/register" target="_blank" rel="noopener noreferrer">
+      <a class="td-lp-new__btn-primary" href="@TD_REGISTER_URL@" target="_blank" rel="noopener noreferrer">
         注册入口 <span class="td-icon td-lp-new__btn-icon" aria-hidden="true">arrow_forward</span>
       </a>
     </div>
@@ -142,8 +142,8 @@ aside: false
         <tr>
           <th class="td-lp-new-table__th">功能特性</th>
           <th class="td-lp-new-table__th td-lp-new-table__th--mid">
-            <div class="td-lp-new-table__brand">AtomFlow API (本站)</div>
-            <div class="td-lp-new-table__sub">atomflow.com</div>
+            <div class="td-lp-new-table__brand">@TD_API_PRODUCT_LABEL@</div>
+            <div class="td-lp-new-table__sub">@TD_DOMAIN_LABEL@</div>
           </th>
           <th class="td-lp-new-table__th">
             <div class="td-lp-new-table__official">官方 API</div>
@@ -199,7 +199,7 @@ aside: false
     </div>
   </div>
   <div class="td-lp-new-visual">
-    <img class="td-lp-new-visual__img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7ibk5jGluZPOPJM68vhwapVtf5hLZysIRCm5rg4qXeRP9PkrLzFwPBHnSVHi2eUB0o0PWKA-vI6f2hHskghevMcuNPlrLf09tGElXi_7QloFc6DZtpVTItq7hmHbh3eQlL6vMsQpNLX2pb3rCx1FuVZxwX_kYkGQ8DT-6VJDtjNNopFcByIBFLP30eQdhrr9LP5BtTrKh3ZntrRteA-4yWhwmAa4fdQGPiYcdUED8S9c2k7o8_XWFCSc2Whz70x0cf2kFDEGeEo" width="960" height="540" alt="数据中心与网络架构示意" loading="lazy" decoding="async" />
+    <img class="td-lp-new-visual__img" src="@TD_SCREENSHOT_ARCH@" width="960" height="540" alt="数据中心与网络架构示意" loading="lazy" decoding="async" />
     <div class="td-lp-new-visual__grad" aria-hidden="true"></div>
     <div class="td-lp-new-visual__cap">
       <div class="td-lp-new__headline-md td-lp-new-visual__cap-title">架构可视化</div>
