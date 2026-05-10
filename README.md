@@ -1,24 +1,78 @@
 # TokenDoc
 
-基于 [VitePress](https://vitepress.dev/) 的本地文档站：从 [New API 官方文档](https://docs.newapi.pro/zh/docs)（默认中文版）同步 **用户功能指引** 与 **API 参考**，并按目录落盘为 Markdown。
+**AtomFlow 文档站** — 基于 [VitePress](https://vitepress.dev/) 的静态文档与 API 参考。内容包含平台介绍、极速入门、用户指南、OpenAI 兼容 API 说明、常见问题，以及可内嵌的独立页（关于我们、隐私政策、用户协议等）。
 
-## 命令
+- 在线文档（部署后）：例如 `https://doc.atomflow.vip`（按你的实际域名）
+- 源码仓库：<https://github.com/hongye007/TokenDoc>
+
+---
+
+## 环境要求
+
+- **Node.js** 18+（推荐 20 LTS）
+- **npm** 9+
+
+---
+
+## 快速开始
+
+```bash
+git clone git@github.com:hongye007/TokenDoc.git
+cd TokenDoc
+npm ci
+```
 
 | 命令 | 说明 |
 |------|------|
-| `npm run docs:sync` | 抓取官方页面并写入 `docs-site/settings/`、`docs-site/api/` |
-| `npm run docs:patch` | 对已有 Markdown 做路径反引号与 `<占位符>` 转义（构建失败时可再执行） |
-| `npm run docs:dev` | 本地预览 |
-| `npm run docs:build` | 静态构建，输出 `docs-site/.vitepress/dist` |
+| `npm run docs:dev` | 本地开发预览（默认 <http://localhost:5173>） |
+| `npm run docs:build` | 生产构建，输出 **`docs-site/.vitepress/dist/`** |
+| `npm run docs:preview` | 本地预览构建结果 |
+| `npm run docs:patch` | 对已有 Markdown 做路径反引号与 `<占位符>` 转义（构建报错时可再执行） |
 
-环境变量：`MAX_API_PAGES`（默认 `200`）限制 API 区 BFS 页数；`SKIP_API_SYNC=1` 时只同步 `settings/`（不爬 API）；**`DOCS_LOCALE`** 默认 `zh`（抓取 `/zh/docs/...` 中文版），英文镜像：`DOCS_LOCALE=en npm run docs:sync`。
+---
 
-## 目录约定
+## 目录说明
 
-- `docs-site/settings/`：侧栏 **「用户指南」** 对应官方中文版 `/zh/docs/guide/feature-guide/user/...`（由 `docs:sync` 写入）：[登陆注册](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/auth)、[个人设置](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/personal-setting)、[令牌管理](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/token)、[模型广场](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/pricing)、[使用日志](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/log)、[钱包管理](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/topup)、[任务日志](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/task)。（`settings/index.md` 为功能指引总览，侧栏不展示，仍可通过 `/settings/` 直接访问。）
-- `docs-site/api/`：从 `/en/docs/api` 起爬取链接（侧栏「API参考」）。
-- `docs-site/faq.md`：自有常见问题占位。
+| 路径 | 说明 |
+|------|------|
+| `docs-site/` | VitePress **文档根**（`config.mts`、主题、Markdown 正文） |
+| `docs-site/.vitepress/` | 主题（`theme/`）、配置 `config.mts` |
+| `docs-site/settings/` | 用户指南 Markdown |
+| `docs-site/api/` | API 参考 Markdown |
+| `docs-site/public/` | 静态资源；根路径下独立 HTML（如法律页、关于我们独立导出）会原样复制到 `dist/` |
+| `scripts/` | 维护用 Node 脚本（如 `docs:patch`） |
 
-## 合规说明
+侧栏「API 参考」下分组与 `docs-site/api/ai-model/` 等路径由 **`docs-site/.vitepress/config.mts`** 维护；顶栏「主站入口」链接为配置项 **`MAIN_SITE_URL`**（请改为你的门户，如 `https://atomflow.vip`）。
 
-内容著作权归官方所有；同步仅供学习与内网部署参考，请遵守官方条款与 robots / 合理使用原则。
+---
+
+## 生产部署（静态站）
+
+构建产物目录：
+
+```text
+docs-site/.vitepress/dist/
+```
+
+将该目录内容部署到任意静态托管（Nginx、Caddy、OSS + CDN、Netlify、Cloudflare Pages 等）。文档子域示例：`doc.atomflow.vip` 的站点根指向 **`dist` 内带 `index.html` 的那一层**，HTTPS 由证书或平台托管即可。
+
+示例（服务器上构建并发布）：
+
+```bash
+npm ci
+npm run docs:build
+rsync -a --delete docs-site/.vitepress/dist/ /var/www/doc.atomflow.vip/
+```
+
+---
+
+## 常见问题
+
+- **构建报 Vue 把 `<token>` 等当成组件**：执行 `npm run docs:patch`，或在 `config.mts` 的 `DOC_PLACEHOLDER_TAGS` 中补充标签名。
+- **正文修改**：直接在 `docs-site/settings/`、`docs-site/api/` 等目录下编辑对应 Markdown 后重新构建即可。
+
+---
+
+## 许可
+
+仓库内脚本与主题代码：`package.json` 中声明为 **ISC**（若后续增加 `LICENSE` 文件，以文件为准）。
