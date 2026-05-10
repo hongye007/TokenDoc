@@ -7,8 +7,6 @@ description: API 调用报错排查、网络与账号、认证权限与客户端
 
 欢迎查阅 API 调用常见问题解答。若在使用过程中遇到下列报错，可按对应条目排查。
 
-以下内容整理自 [呆呆兽 Hub · 常见问题](https://www.ddshub.cc/faq)，与多数基于 New API / 同类网关的部署相通；**具体配额、分组与控制台路径以你当前使用的平台为准**。若与上游说明不一致，以服务商最新文档为准。
-
 ---
 
 ## 服务端 & 网络连接类错误
@@ -87,10 +85,3 @@ description: API 调用报错排查、网络与账号、认证权限与客户端
 **可能原因：** 触发了「仅允许 Claude Code 客户端」类限制。
 
 **解决方案：** 在 Claude Code 扩展/插件环境中使用一般不受影响；请确认调用环境符合渠道要求。
-
----
-
-## 参考链接
-
-- 原文档站（致谢）：[https://www.ddshub.cc/faq](https://www.ddshub.cc/faq)
-- 同类网关通用说明（英文）：[New API FAQ](https://docs.newapi.pro/zh/docs/support/faq)
