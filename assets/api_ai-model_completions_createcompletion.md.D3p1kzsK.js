@@ -1,0 +1,29 @@
+import{_ as n,o as a,c as p,ak as t}from"./chunks/framework.oFDsBAuP.js";const d=JSON.parse('{"title":"原生OpenAI格式","description":"","frontmatter":{"title":"原生OpenAI格式","source":"https://docs.newapi.pro/zh/docs/api/ai-model/completions/createcompletion","syncedAt":"2026-05-10T11:16:37.629Z"},"headers":[],"relativePath":"api/ai-model/completions/createcompletion.md","filePath":"api/ai-model/completions/createcompletion.md"}'),o={name:"api/ai-model/completions/createcompletion.md"};function e(l,s,i,c,u,q){return a(),p("div",null,[...s[0]||(s[0]=[t(`<div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>{</span></span>
+<span class="line"><span>  &quot;id&quot;: &quot;string&quot;,</span></span>
+<span class="line"><span>  &quot;object&quot;: &quot;text_completion&quot;,</span></span>
+<span class="line"><span>  &quot;created&quot;: 0,</span></span>
+<span class="line"><span>  &quot;model&quot;: &quot;string&quot;,</span></span>
+<span class="line"><span>  &quot;choices&quot;: [</span></span>
+<span class="line"><span>    {</span></span>
+<span class="line"><span>      &quot;text&quot;: &quot;string&quot;,</span></span>
+<span class="line"><span>      &quot;index&quot;: 0,</span></span>
+<span class="line"><span>      &quot;finish_reason&quot;: &quot;string&quot;</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  ],</span></span>
+<span class="line"><span>  &quot;usage&quot;: {</span></span>
+<span class="line"><span>    &quot;prompt_tokens&quot;: 0,</span></span>
+<span class="line"><span>    &quot;completion_tokens&quot;: 0,</span></span>
+<span class="line"><span>    &quot;total_tokens&quot;: 0,</span></span>
+<span class="line"><span>    &quot;prompt_tokens_details&quot;: {</span></span>
+<span class="line"><span>      &quot;cached_tokens&quot;: 0,</span></span>
+<span class="line"><span>      &quot;text_tokens&quot;: 0,</span></span>
+<span class="line"><span>      &quot;audio_tokens&quot;: 0,</span></span>
+<span class="line"><span>      &quot;image_tokens&quot;: 0</span></span>
+<span class="line"><span>    },</span></span>
+<span class="line"><span>    &quot;completion_tokens_details&quot;: {</span></span>
+<span class="line"><span>      &quot;text_tokens&quot;: 0,</span></span>
+<span class="line"><span>      &quot;audio_tokens&quot;: 0,</span></span>
+<span class="line"><span>      &quot;reasoning_tokens&quot;: 0</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span></code></pre></div><hr><blockquote><p><strong>来源</strong>：<a href="https://docs.newapi.pro/zh/docs/api/ai-model/completions/createcompletion" target="_blank" rel="noreferrer">官方文档</a>（New API）。本站为离线整理副本，如有出入以官方为准。</p></blockquote>`,3)])])}const _=n(o,[["render",e]]);export{d as __pageData,_ as default};
