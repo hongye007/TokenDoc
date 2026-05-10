@@ -7,7 +7,7 @@ html.td-api-reference {
   --td-api-surface: #131315;
   --td-api-surface-container: #1f1f21;
   --td-api-outline: #434656;
-  --td-api-primary: #b6c4ff;
+  --td-api-primary: var(--td-p-api-primary);
   --td-api-on-surface: #e4e2e4;
   --td-api-on-surface-variant: #c3c5d9;
   --td-api-get: #4ade80;
@@ -15,7 +15,7 @@ html.td-api-reference {
   --td-api-put: #fbbf24;
   --td-api-patch: #fbbf24;
   --td-api-delete: #f87171;
-  --td-api-default: #a5b4fc;
+  --td-api-default: var(--td-p-api-default-method);
 }
 
 html.td-api-reference.dark {
@@ -75,7 +75,7 @@ html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--del
 
 html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--head,
 html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--options {
-  background: rgba(165, 180, 252, 0.14);
+  background: var(--td-p-api-method-soft);
   color: var(--td-api-default);
 }
 
@@ -122,7 +122,7 @@ html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--delete
 }
 html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--head,
 html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--options {
-  background: rgba(165, 180, 252, 0.14);
+  background: var(--td-p-api-method-soft);
   color: var(--td-api-default);
 }
 
@@ -198,7 +198,7 @@ html.td-api-aside-tryit .VPDocAside > .td-api-aside-tryit .td-api-aside-pre {
 }
 
 html.td-api-aside-tryit {
-  --td-api-aside-accent: #a78bfa;
+  --td-api-aside-accent: var(--td-p-api-aside-accent);
   --td-api-aside-border: rgba(120, 120, 140, 0.35);
   --td-api-aside-surface: var(--td-api-surface-container);
   --td-api-aside-toolbar: var(--td-api-surface);

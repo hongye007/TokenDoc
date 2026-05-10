@@ -1,0 +1,88 @@
+/**
+ * TokenDoc — 全局配色方案
+ * ----------------------------------------
+ * 换色时优先只改本文件中的「设计令牌」（--td-p-*）十六进制 / rgba。
+ * --vp-c-brand-* 由下方映射到 VitePress，一般无需直接改 VitePress 变量名。
+ */
+
+/* =============================================================================
+ * 设计令牌（品牌 / 扩展场景）
+ * ============================================================================= */
+
+:root {
+  /**
+   * 品牌主色阶（主色 #0057FF，略偏电蓝）
+   * 链接用 brand，强调/描边用 strong，高光用 bright。
+   */
+  --td-p-brand-strong: #0043c4;
+  --td-p-brand: #0057ff;
+  --td-p-brand-bright: #3d7bff;
+  --td-p-brand-soft: rgba(0, 87, 255, 0.12);
+
+  /**
+   * 实心主按钮（略深于主色，保证白字对比；悬停 / 按下再逐级加深）
+   */
+  --td-p-brand-solid: #0046d9;
+  --td-p-brand-solid-hover: #0037b0;
+  --td-p-brand-solid-active: #002b88;
+
+  /* --- 深色模式下的品牌（同色相提亮）--- */
+  --td-p-brand-on-dark-light: #88b4ff;
+  --td-p-brand-on-dark-mid: #5c94ff;
+  --td-p-brand-soft-on-dark: rgba(92, 148, 255, 0.18);
+
+  /* 深色模式下实心按钮 */
+  --td-p-brand-solid-on-dark: #0057ff;
+  --td-p-brand-solid-hover-on-dark: #0046dd;
+  --td-p-brand-solid-active-on-dark: #0037b5;
+
+  /* --- 平台介绍 / 页脚（深色卡上的链接、主按钮、悬停强调）--- */
+  --td-p-landing-primary: #88b4ff;
+  --td-p-landing-on-primary: #0c1a2e;
+  --td-p-landing-accent: #5c94ff;
+
+  /* --- API 参考壳 --- */
+  --td-p-api-primary: #88b4ff;
+  --td-p-api-default-method: #5c94ff;
+  --td-p-api-method-soft: rgba(92, 148, 255, 0.14);
+  --td-p-api-aside-accent: #3d7bff;
+}
+
+/* =============================================================================
+ * 映射：VitePress 品牌变量（浅色文档默认）
+ * ============================================================================= */
+
+:root {
+  --vp-c-brand-1: var(--td-p-brand);
+  --vp-c-brand-2: var(--td-p-brand-strong);
+  --vp-c-brand-3: var(--td-p-brand-bright);
+  --vp-c-brand-soft: var(--td-p-brand-soft);
+}
+
+/* VitePress 默认用偏浅的 brand-3 作按钮底，白字对比弱；改为专用深色阶 */
+:root {
+  --vp-button-brand-bg: var(--td-p-brand-solid);
+  --vp-button-brand-hover-bg: var(--td-p-brand-solid-hover);
+  --vp-button-brand-active-bg: var(--td-p-brand-solid-active);
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+}
+
+/* =============================================================================
+ * 映射：VitePress 品牌变量（深色模式）
+ * ============================================================================= */
+
+.dark {
+  --vp-c-brand-1: var(--td-p-brand-on-dark-light);
+  --vp-c-brand-2: var(--td-p-brand-on-dark-mid);
+  --vp-c-brand-3: var(--td-p-brand-on-dark-mid);
+  --vp-c-brand-soft: var(--td-p-brand-soft-on-dark);
+
+  --vp-button-brand-bg: var(--td-p-brand-solid-on-dark);
+  --vp-button-brand-hover-bg: var(--td-p-brand-solid-hover-on-dark);
+  --vp-button-brand-active-bg: var(--td-p-brand-solid-active-on-dark);
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+}

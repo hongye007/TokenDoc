@@ -26,8 +26,8 @@
   font-family: var(--td-lp-font);
   color: var(--vp-c-text-1);
   background: transparent;
-  margin: 0 0 1.5rem;
-  padding: 0 0 1.5rem;
+  margin: 0 0 0.5rem;
+  padding: 0 0 0.5rem;
   border: none;
   border-radius: 0;
   box-sizing: border-box;
@@ -36,7 +36,8 @@
 @media (min-width: 960px) {
   .vp-doc .td-landing,
   .vp-doc .td-flow {
-    padding: 0 0 1.75rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
   }
 }
 
@@ -463,6 +464,13 @@ a.td-stepper__item:focus-visible {
   color: var(--vp-button-brand-text);
 }
 
+/* 极速入门：当前步圆点略浅于主按钮底色（主色 #0057ff），选中态更醒目 */
+.vp-doc .td-flow .td-stepper__num--active {
+  background: var(--td-p-brand);
+  border-color: var(--td-p-brand);
+  color: var(--vp-button-brand-text);
+}
+
 .td-stepper__label {
   font-family: var(--td-lp-mono);
   font-size: 0.5625rem;
@@ -479,6 +487,10 @@ a.td-stepper__item:focus-visible {
 
 .td-flow-section {
   margin-bottom: 2.5rem;
+}
+
+.vp-doc .td-flow > .td-flow-section:last-of-type {
+  margin-bottom: 0;
 }
 
 /* 锚点滚动时避开固定顶栏 */
@@ -661,6 +673,39 @@ a.td-flow-inline-link:hover {
   border-color: var(--vp-button-brand-hover-border);
 }
 
+.td-btn--primary:active {
+  background: var(--vp-button-brand-active-bg);
+  color: var(--vp-button-brand-active-text);
+  border-color: var(--vp-button-brand-active-border);
+}
+
+/* 极速入门：主按钮按下态略浅于默认实心色（用主色 #0057ff） */
+.vp-doc .td-flow .td-btn--primary:active {
+  background: var(--td-p-brand);
+  color: var(--vp-button-brand-text);
+  border-color: var(--td-p-brand);
+}
+
+/* 键盘焦点：主按钮用白环 + 外圈品牌色，避免「高亮」仅变浅蓝难辨认 */
+.td-btn:focus-visible {
+  outline: 2px solid var(--td-p-brand-strong);
+  outline-offset: 2px;
+}
+
+.td-btn--primary:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--td-p-brand);
+}
+
+.dark .td-btn:focus-visible {
+  outline-color: var(--td-p-brand-on-dark-mid);
+}
+
+.dark .td-btn--primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--td-p-brand-on-dark-light);
+}
+
 .td-code-panel {
   margin-top: 1rem;
   border: 1px dashed var(--vp-c-divider);
@@ -723,17 +768,18 @@ a.td-flow-inline-link:hover {
 }
 
 .vp-doc .td-lp-new {
+  --td-lp-bg: var(--vp-c-bg);
   --td-lp-on-surface: #e4e2e4;
   --td-lp-on-surface-variant: #c3c5d9;
-  --td-lp-primary: #b6c4ff;
-  --td-lp-on-primary: #00277f;
+  --td-lp-primary: var(--td-p-landing-primary);
+  --td-lp-on-primary: var(--td-p-landing-on-primary);
   --td-lp-surface-low: #1b1b1d;
   --td-lp-surface-container: #1f1f21;
   --td-lp-surface-high: #2a2a2c;
   --td-lp-surface-highest: #353437;
   --td-lp-surface-lowest: #0e0e10;
   --td-lp-outline-variant: #434656;
-  --td-lp-accent: #38debb;
+  --td-lp-accent: var(--td-p-landing-accent);
   --td-lp-radius: 0.5rem;
   --td-lp-radius-lg: 0.75rem;
   --td-lp-font: "Inter", var(--vp-font-family-base);
@@ -743,8 +789,32 @@ a.td-flow-inline-link:hover {
   color: var(--vp-c-text-1);
   background: transparent;
   margin: 0;
-  padding: 0 0 2rem;
+  padding: 0 0 1rem;
   box-sizing: border-box;
+}
+
+/* 亮色模式：平台介绍卡片 / 表格 / 合规框与 VitePress 文档面色阶一致 */
+html:not(.dark) .vp-doc .td-lp-new {
+  --td-lp-on-surface: var(--vp-c-text-1);
+  --td-lp-on-surface-variant: var(--vp-c-text-2);
+  --td-lp-surface-low: var(--vp-c-bg-soft);
+  --td-lp-surface-container: var(--vp-c-bg-alt);
+  --td-lp-surface-high: var(--vp-c-bg-alt);
+  --td-lp-surface-highest: color-mix(in srgb, var(--vp-c-bg-alt) 88%, var(--vp-c-text-1) 12%);
+  --td-lp-surface-lowest: var(--vp-c-bg-soft);
+  --td-lp-outline-variant: var(--vp-c-divider);
+  --td-lp-primary: var(--td-p-brand);
+  --td-lp-on-primary: #ffffff;
+  --td-lp-accent: var(--td-p-brand-strong);
+}
+
+html:not(.dark) .vp-doc .td-lp-new-slab:hover {
+  box-shadow: 0 8px 28px rgba(0, 87, 255, 0.08);
+}
+
+html:not(.dark) .vp-doc .td-lp-new__table-scroll:hover,
+html:not(.dark) .vp-doc .td-lp-new-visual:hover {
+  box-shadow: 0 8px 28px rgba(0, 87, 255, 0.09);
 }
 
 .vp-doc .td-lp-new ::selection {
@@ -754,7 +824,7 @@ a.td-flow-inline-link:hover {
 
 @media (min-width: 960px) {
   .vp-doc .td-lp-new {
-    padding: 0 0 2.5rem;
+    padding: 0 0 1.25rem;
   }
 }
 
@@ -818,6 +888,11 @@ a.td-flow-inline-link:hover {
 
 .vp-doc .td-lp-new__section {
   margin-bottom: 4rem;
+}
+
+/* 最后一节不再保留 4rem，避免与底部分页导航之间空白过大 */
+.vp-doc .td-lp-new__main > .td-lp-new__section:last-of-type {
+  margin-bottom: 0;
 }
 
 .vp-doc .td-lp-new__section-head,
@@ -1124,14 +1199,33 @@ a.td-flow-inline-link:hover {
 }
 
 .vp-doc .td-lp-new-feat {
+  box-sizing: border-box;
   background: var(--td-lp-surface-low);
   padding: 1.5rem;
+  border: 1px solid var(--td-lp-outline-variant);
   border-left: 2px solid var(--td-lp-primary);
-  transition: background 0.2s ease;
+  border-radius: var(--td-lp-radius);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .vp-doc .td-lp-new-feat:hover {
   background: var(--td-lp-surface-container);
+  border-left-color: var(--td-lp-accent);
+}
+
+/* 深色文档底：surface-low 与 --vp-c-bg 过近，改用主题层级色 + 描边拉开对比 */
+.dark .vp-doc .td-lp-new-feat {
+  background: var(--vp-c-bg-soft);
+  border-color: var(--vp-c-divider);
+  border-left-color: var(--td-lp-primary);
+}
+
+.dark .vp-doc .td-lp-new-feat:hover {
+  background: var(--vp-c-bg-alt);
+  border-color: var(--vp-c-divider);
+  border-left-color: var(--td-lp-accent);
 }
 
 .vp-doc .td-lp-new-feat__icon {
@@ -1411,17 +1505,32 @@ a.td-flow-inline-link:hover {
 
 /* 与平台介绍页脚同款色板（页脚可在 .vp-doc 外，需自带变量） */
 .td-site-legal-footer {
+  --td-lp-bg: var(--vp-c-bg);
   --td-lp-on-surface: #e4e2e4;
   --td-lp-on-surface-variant: #c3c5d9;
-  --td-lp-primary: #b6c4ff;
-  --td-lp-on-primary: #00277f;
+  --td-lp-primary: var(--td-p-landing-primary);
+  --td-lp-on-primary: var(--td-p-landing-on-primary);
   --td-lp-surface-low: #1b1b1d;
   --td-lp-surface-container: #1f1f21;
   --td-lp-surface-high: #2a2a2c;
   --td-lp-surface-highest: #353437;
   --td-lp-surface-lowest: #0e0e10;
   --td-lp-outline-variant: #434656;
-  --td-lp-accent: #38debb;
+  --td-lp-accent: var(--td-p-landing-accent);
+}
+
+html:not(.dark) .td-site-legal-footer {
+  --td-lp-on-surface: var(--vp-c-text-1);
+  --td-lp-on-surface-variant: var(--vp-c-text-2);
+  --td-lp-surface-low: var(--vp-c-bg-soft);
+  --td-lp-surface-container: var(--vp-c-bg-alt);
+  --td-lp-surface-high: var(--vp-c-bg-alt);
+  --td-lp-surface-highest: color-mix(in srgb, var(--vp-c-bg-alt) 88%, var(--vp-c-text-1) 12%);
+  --td-lp-surface-lowest: var(--vp-c-bg-soft);
+  --td-lp-outline-variant: var(--vp-c-divider);
+  --td-lp-primary: var(--td-p-brand);
+  --td-lp-on-primary: #ffffff;
+  --td-lp-accent: var(--td-p-brand-strong);
 }
 
 .vp-doc .td-lp-new__footer,
@@ -1429,6 +1538,14 @@ a.td-flow-inline-link:hover {
   margin-top: 5rem;
   padding-top: 2.5rem;
   border-top: 1px solid var(--td-lp-outline-variant);
+}
+
+/**
+ * 文档页：合规页脚紧跟 VPDocFooter（上一页/下一页），与主题 .prev-next 顶部分割线后的
+ * padding-top: 24px 对称，避免 5rem 造成「导航与下一条分割线」过大空白。
+ */
+.VPDoc .content-container > .td-site-legal-footer {
+  margin-top: 24px;
 }
 
 .vp-doc .td-lp-new__footer-head,
@@ -1493,16 +1610,56 @@ a.td-flow-inline-link:hover {
   color: inherit;
 }
 
-/* layout: page 等：页脚与正文区对齐 */
+.vp-doc .td-lp-new__legal-links button.td-legal-footer-link,
+.td-site-legal-footer .td-lp-new__legal-links button.td-legal-footer-link {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.vp-doc .td-lp-new__legal-links button.td-legal-footer-link:hover,
+.td-site-legal-footer .td-lp-new__legal-links button.td-legal-footer-link:hover {
+  color: var(--td-lp-accent);
+}
+
+/* layout: page（关于我们等）：页脚在内容列内横向撑满，不再收窄到 42rem */
 .VPContent .VPPage > .td-site-legal-footer {
   box-sizing: border-box;
   width: 100%;
-  max-width: 42rem;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-bottom: 3rem;
+}
+
+.VPContent .VPPage > .td-site-legal-footer .td-lp-new__legal {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+/* 关于我们等 layout:page：全宽页脚时标题「合规与声明」整组水平居中 */
+.VPContent .VPPage > .td-site-legal-footer .td-lp-new__footer-head {
+  justify-content: center;
+}
+
+/* 合规卡片内正文与底部链接行与标题一致居中（相对侧栏占位后的内容区） */
+.VPContent .VPPage > .td-site-legal-footer {
+  text-align: center;
+}
+
+.VPContent .VPPage > .td-site-legal-footer .td-lp-new__legal-links {
+  justify-content: center;
 }
 
 /* 极速入门 · 试一试弹窗打开时禁止背景滚动 */

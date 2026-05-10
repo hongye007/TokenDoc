@@ -52,11 +52,24 @@ function apiAiModelItem(
   return { text, link: `/api/ai-model/${route}` };
 }
 
+/** 侧栏「音频」分组：false 为暂时隐藏（页面路径仍可直接访问） */
+const sidebarShowAudio = false;
+
 /**
  * API 参考二级目录：按开放路径能力分组（与 `/v1/chat/completions` 等路径对齐）。
  * 「文本」下含聊天补全、Responses、Claude Messages、Embedding、Rerank。
- * 「图像」「音频」为精简后的 OpenAI 兼容能力分组；视频与其它接口侧栏项已暂时移除（旧页面文件仍可保留在仓库）。
+ * 「图像」等为精简后的 OpenAI 兼容能力分组；视频与其它接口侧栏项已暂时移除（旧页面文件仍可保留在仓库）。
  */
+const apiAudioSection: DefaultTheme.SidebarItem = {
+  text: "音频",
+  collapsed: true,
+  items: [
+    apiAiModelItem("audio/create-speech.md", "创建音频", "POST"),
+    apiAiModelItem("audio/create-transcription.md", "创建转录", "POST"),
+    apiAiModelItem("audio/create-translation.md", "音频翻译", "POST"),
+  ],
+};
+
 const apiItems: DefaultTheme.SidebarItem[] = [
   {
     text: "模型",
@@ -86,15 +99,7 @@ const apiItems: DefaultTheme.SidebarItem[] = [
       apiAiModelItem("images/create-variation.md", "获取图像变体", "POST"),
     ],
   },
-  {
-    text: "音频",
-    collapsed: true,
-    items: [
-      apiAiModelItem("audio/create-speech.md", "创建音频", "POST"),
-      apiAiModelItem("audio/create-transcription.md", "创建转录", "POST"),
-      apiAiModelItem("audio/create-translation.md", "音频翻译", "POST"),
-    ],
-  },
+  ...(sidebarShowAudio ? [apiAudioSection] : []),
 ];
 
 /** 「用户指南」侧栏条目（内容由 npm run docs:sync 写入 /settings/；不含「概述」页） */
@@ -107,6 +112,12 @@ const settingsSidebarItems: DefaultTheme.SidebarItem[] = [
   { text: "钱包管理", link: "/settings/user/topup" },
   { text: "任务日志", link: "/settings/user/task" },
 ];
+
+/** 侧栏「常见问题」入口：false 为暂时隐藏 */
+const sidebarShowFaq = true;
+
+/** 顶栏右侧 GitHub 图标链接：false 为暂时隐藏 */
+const navShowGithubSocial = false;
 
 const docSidebar: DefaultTheme.SidebarItem[] = [
   { text: "平台介绍", link: "/" },
@@ -121,7 +132,7 @@ const docSidebar: DefaultTheme.SidebarItem[] = [
     collapsed: false,
     items: apiItems,
   },
-  { text: "常见问题", link: "/faq" },
+  ...(sidebarShowFaq ? [{ text: "常见问题", link: "/faq" } satisfies DefaultTheme.SidebarItem] : []),
 ];
 
 const sidebarForDocs: DefaultTheme.Sidebar = docSidebar;
@@ -161,14 +172,14 @@ export default defineConfig({
   themeConfig: {
     /** 左侧：图标 + Doc；右侧菜单首项仍为「平台文档」 */
     logo: SITE_BRAND_MARK,
-    siteTitle: '<span class="td-nav-site-title-doc">AtomFlow文档系统</span>',
+    siteTitle: '<span class="td-nav-site-title-doc">AtomFlow 文档系统</span>',
     sidebarMenuLabel: "文档目录",
     nav: [
       { text: "平台文档", link: "/", activeMatch: "^/(?!contact)" },
-      { text: "联系我们", link: "/contact" },
+      { text: "关于我们", link: "/contact" },
       { text: "主站入口", link: MAIN_SITE_URL, target: "_blank", rel: "noopener noreferrer" },
     ],
-    /** 文档区统一左侧目录；联系我们为独立 page 布局，不渲染侧栏 */
+    /** 文档区统一左侧目录；关于我们页为独立 page 布局，不渲染侧栏 */
     sidebar: {
       "/": sidebarForDocs,
       "/quickstart": sidebarForDocs,
@@ -176,11 +187,9 @@ export default defineConfig({
       "/api/": sidebarForDocs,
       "/faq": sidebarForDocs,
     },
-    socialLinks: [{ icon: "github", link: "https://github.com/QuantumNous/new-api" }],
-    footer: {
-      message: "内容部分同步自 New API 官方文档，请以官方为准",
-      copyright: "",
-    },
+    socialLinks: navShowGithubSocial
+      ? [{ icon: "github", link: "https://github.com/QuantumNous/new-api" }]
+      : [],
     search: { provider: "local" },
     outline: {
       level: [2, 3],

@@ -37,7 +37,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   忘记密码重置
 *   新用户注册流程
 
-[查看详细文档 →](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/auth)
+[查看详细文档 →](./user/auth)
 
 ### [个人设置](#个人设置)
 
@@ -49,7 +49,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   注册 Passkey 无密码登录
 *   绑定第三方账号
 
-[查看详细文档 →](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/personal-setting)
+[查看详细文档 →](./user/personal-setting)
 
 ### [令牌管理](#令牌管理)
 
@@ -61,7 +61,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   配置模型限制
 *   设置 IP 白名单
 
-[查看详细文档 →](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/token)
+[查看详细文档 →](./user/token)
 
 ### [使用记录](#使用记录)
 
@@ -72,7 +72,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   数据统计图表
 *   配额消耗分析
 
-[查看详细文档 →](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/log)
+[查看详细文档 →](./user/log)
 
 ### [钱包管理](#钱包管理)
 
@@ -83,7 +83,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   邀请奖励
 *   查看充值记录
 
-[查看详细文档 →](/settings/user/topup)
+[查看详细文档 →](./user/topup)
 
 ### [订阅计划](#订阅计划)
 
@@ -103,7 +103,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   搜索特定模型
 *   了解计费规则
 
-[查看详细文档 →](/settings/user/pricing)
+[查看详细文档 →](./user/pricing)
 
 ### [任务](#任务)
 
@@ -113,7 +113,7 @@ New API 是一个统一的 LLM 网关平台，将多个 AI 服务商的接口聚
 *   查看任务详情
 *   管理任务进度
 
-[查看详细文档 →](https://docs.newapi.pro/zh/docs/guide/feature-guide/user/task)
+[查看详细文档 →](./user/task)
 
 适用于 Admin 及 Root 角色，涵盖平台运营与系统配置的全部功能。
 

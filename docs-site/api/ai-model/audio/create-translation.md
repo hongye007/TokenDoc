@@ -20,16 +20,14 @@ outline: false
 
 请求为 **`multipart/form-data`**；建议超时 **≥ 120s**。
 
-## 请求体（节选）
-
+## 请求体
 - **`file`**：音频；格式见文档；最大约 **25MB**。  
 - **`model`**：**`whisper-1`**。  
 - **`prompt`**：可选，英文引导。  
 - **`response_format`**：`json`、`text`、`srt`、`verbose_json`、`vtt`。  
 - **`temperature`**：0–1。
 
-## 响应（节选）
-
+## 响应
 - 英文 **`text`**；**`verbose_json`** 下含 `task`、`language`、`duration`、`segments` 等。
 
 ## 翻译与转录

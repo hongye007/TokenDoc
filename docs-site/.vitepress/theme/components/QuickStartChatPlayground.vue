@@ -271,13 +271,13 @@ async function sendRequest() {
   text-transform: uppercase;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  background: #4f46e5;
-  color: #fff;
+  background: var(--vp-button-brand-bg);
+  color: var(--vp-button-brand-text);
 }
 
 .dark .td-qs-playground__pill {
-  background: #6366f1;
-  color: #fff;
+  background: var(--vp-button-brand-bg);
+  color: var(--vp-button-brand-text);
 }
 
 .td-qs-playground__path {

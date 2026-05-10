@@ -20,8 +20,7 @@ outline: false
 
 示例网关：`https://atomflow.vip/v1`。
 
-## 请求体（节选）
-
+## 请求体
 - **`model`**：Embedding 模型 ID（如 `text-embedding-3-small`）。  
 - **`input`**：待嵌入文本，字符串或字符串数组。  
 - **`encoding_format`**：`float` 或 `base64`（若支持）。  
@@ -38,8 +37,7 @@ outline: false
 
 线上以网关实际可用模型为准。
 
-## 响应（节选）
-
+## 响应
 - **`object`**：列表形态下为 `list`。  
 - **`data`**：embedding 对象数组；每项含 `object`（`embedding`）、`index`、`embedding`（向量）。  
 - **`model`**、**`usage`**（如 `prompt_tokens`、`total_tokens`）。

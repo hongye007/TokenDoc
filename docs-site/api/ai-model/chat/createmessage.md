@@ -26,7 +26,7 @@ outline: false
 - **`anthropic-version`**：例如 **`2023-06-01`**。  
 - **`Content-Type`**：`application/json`。
 
-## 请求体（节选）
+## 请求体
 
 - **`model`**：Claude 模型 ID（如 `claude-sonnet-4-6`）。  
 - **`messages`**：`role` + `content`；视觉模型下 `content` 可为块数组：  
@@ -37,7 +37,7 @@ outline: false
 - **`thinking`**（扩展思考）：如 `type: "enabled"`、`budget_tokens`。  
 - **`tools`**、**`tool_choice`**、**`top_p`**、**`top_k`**、**`stop_sequences`**、**`metadata`** 等。
 
-## 响应（节选）
+## 响应
 
 - **`id`**、**`type`**（`message`）、**`role`**（`assistant`）。  
 - **`content`**：内容块数组（`text`、`thinking`、`tool_use` 等）。  
@@ -64,7 +64,7 @@ outline: false
 }
 ```
 
-## 扩展思考（Python 节选）
+## 扩展思考（Python）
 
 ```python
 message = client.messages.create(

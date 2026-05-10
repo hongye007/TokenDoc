@@ -6,7 +6,7 @@ title: "任务日志"
 
 **任务日志**用于查看异步类能力的执行记录，例如 Midjourney 绘图、Suno 音乐生成、视频生成等：每条记录对应一次提交，可跟踪排队、进行与结束状态，并在成功后查看产出或失败原因。
 
-进入方式：侧栏 **任务日志**，或访问 `/console/task`。
+进入方式：侧栏 **任务日志**，或访问 [控制台 · 任务日志](https://atomflow.vip/console/task)。
 
 ![任务记录：筛选与列表](/settings/task/task-records.png)
 

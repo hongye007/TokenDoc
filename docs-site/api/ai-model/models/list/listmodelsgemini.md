@@ -30,8 +30,7 @@ curl -sS "https://atomflow.vip/v1beta/models" \
   -H "Authorization: Bearer sk-your-token"
 ```
 
-## 成功响应（节选）
-
+## 成功响应
 `200`，JSON 顶层为 `models`：
 
 ```json

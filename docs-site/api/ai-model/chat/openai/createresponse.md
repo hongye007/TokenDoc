@@ -20,8 +20,7 @@ outline: false
 
 示例网关：`https://atomflow.vip/v1`。
 
-## Request Body（节选）
-
+## Request Body
 - **`model`**：模型 ID。  
 - **`input`**：由对话项组成的列表；项可为 `message`、`function_call`、`function_call_output` 等类型。  
 - 多模态下，`message.content` 可为字符串或内容块数组；图像能力模型建议使用 **`input_image`** 等内容块，而不是把 URL/Base64 直接塞进纯文本。  
@@ -29,8 +28,7 @@ outline: false
 - **`instructions`**：系统级指令（等同 system 消息）。  
 - **`max_output_tokens`**、**`temperature`**、**`tools`**、**`stream`**、**`previous_response_id`**、**`store`**、**`metadata`**、**`text`**（含 `text.format`）、**`parallel_tool_calls`**、**`top_p`**、**`reasoning`**（如 `effort`）等：语义与 OpenAI 文档及网关实现一致；是否全部可用取决于模型与路由。
 
-## Response（节选）
-
+## Response
 - **`id`**、**`object`**（`response`）、**`created`**、**`model`**。  
 - **`output`**：模型生成的输出项列表。  
 - **`usage`**：token 统计。

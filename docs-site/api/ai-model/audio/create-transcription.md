@@ -20,8 +20,7 @@ outline: false
 
 建议超时 **≥ 120s**。
 
-## 请求体（节选）
-
+## 请求体
 - **`file`**：音频文件；支持 flac、mp3、mp4、mpeg、mpga、m4a、ogg、wav、webm 等。  
 - **`model`**：如 **`whisper-1`**。  
 - **`language`**：可选，ISO-639-1（如 `en`、`zh`）。  
@@ -29,8 +28,7 @@ outline: false
 - **`response_format`**：`json`、`text`、`srt`、`verbose_json`、`vtt`。  
 - **`temperature`**、**`timestamp_granularities`**（配合 `verbose_json`）等。
 
-## 响应（节选）
-
+## 响应
 - 默认 JSON 含 **`text`**。  
 - **`verbose_json`** 下含 `task`、`language`、`duration`、`segments`、词级时间戳等。
 

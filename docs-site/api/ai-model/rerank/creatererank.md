@@ -22,16 +22,14 @@ outline: false
 
 示例网关：`https://atomflow.vip/v1`。
 
-## 请求体（节选）
-
+## 请求体
 - **`model`**：重排序模型 ID（如 `BAAI/bge-reranker-v2-m3`、`qwen3-rerank` 等，以网关为准）。  
 - **`query`**：查询语句。  
 - **`documents`**：待排序文档字符串数组。  
 - **`top_n`**：返回前若干条；默认可视为全部。  
 - **`return_documents`**：是否在结果中包含原始文档文本。
 
-## 响应（节选）
-
+## 响应
 - **`results`**：已排序结果列表；每项常含：  
   - **`index`**：原始文档下标  
   - **`relevance_score`**：相关性分数（如 0–1）  

@@ -17,7 +17,7 @@ apiPath: /v1/models
 ## 接口一览
 
 | 文档 | 方法 | 路径 | 说明 |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | [列出模型（OpenAI 格式）](./list/listmodels) | `GET` | `/v1/models` | 响应字段、查询参数与常见 OpenAI 兼容实现一致方向的说明；正文含多厂商列表格式、错误与扩展字段说明。 |
 | [列出模型（Gemini 原生格式）](./list/listmodelsgemini) | `GET` | `/v1beta/models` | 返回与 Gemini REST 对齐的 `models` 数组。 |
 | [获取模型](./get-model) | `GET` | `/v1/models/{model}` | 若网关开放，用于查询单个模型详情；未开放时以列表接口为准。 |
@@ -36,7 +36,7 @@ apiPath: /v1/models
 
 部分网关还会在条目上附带 **扩展元数据**（键名可能带服务商或网关约定前缀），例如与分类、定价、能力摘要相关的字段。更完整的「仅详情可见」元数据一般在 **`GET /v1/models/{model}`** 中；**`GET /v1/models`** 更侧重发现与列表。
 
-## 查询参数（节选）
+## 查询参数
 
 以下为部分实现中常见的 **可选** 能力（未实现的参数可能被网关忽略）：
 
@@ -62,4 +62,4 @@ Authorization: Bearer sk-xxxxxx
 ## 使用注意
 
 - 实际返回的模型集合受 **渠道、分组、计费与运营策略** 影响，与右侧示例不一定完全一致。  
-- 对话补全、Responses、Claude Messages、**Embedding** 与 **重排序** 等见侧栏 **文本**；**创建 / 编辑图像、变体** 与 **TTS、转录、音频翻译** 见 **图像**、**音频**。
+- 对话补全、Responses、Claude Messages、**Embedding** 与 **重排序** 等见侧栏 **文本**；**创建 / 编辑图像、变体** 见侧栏 **图像**。TTS、转录、音频翻译等接口说明位于 `api/ai-model/audio/` 文档目录（侧栏入口暂不提供）。

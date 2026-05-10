@@ -18,8 +18,7 @@ outline: false
 | 路径 | `/v1/chat/completions` |
 | 认证 | `Authorization: Bearer <token>` |
 
-## Request Body（节选）
-
+## Request Body
 - **`model`**：要使用的模型 ID。  
 - **`messages`**：对话消息列表；每条含 `role`（`system` | `user` | `assistant`）与 `content`（字符串或结构化块）。  
 - 当 **`content` 为数组**时，兼容实现可支持多模态块，例如：  
@@ -37,8 +36,7 @@ outline: false
 - **`n`**、**`logprobs`**、**`top_logprobs`**、**`top_k`**、**`response_format`**、**`logit_bias`**、**`user`** 等：见 OpenAI 官方说明。  
 - **`cache_control`**（若支持）：如 `type`、`max_age` 等缓存策略字段。
 
-## Response（节选）
-
+## Response
 - **`id`**、**`object`**（`chat.completion`）、**`created`**、**`model`**。  
 - **`choices`**：含 `index`、`message`（`role` / `content` 等）、`finish_reason`（如 `stop`、`length`、`tool_calls`）。  
 - **`usage`**：`prompt_tokens`、`completion_tokens`、`total_tokens`。
