@@ -1,0 +1,230 @@
+/**
+ * API 参考页视觉框架（深色参考站风格）
+ * 由 html.td-api-reference 开关（见 ApiDocChrome.vue）
+ */
+
+html.td-api-reference {
+  --td-api-surface: #131315;
+  --td-api-surface-container: #1f1f21;
+  --td-api-outline: #434656;
+  --td-api-primary: #b6c4ff;
+  --td-api-on-surface: #e4e2e4;
+  --td-api-on-surface-variant: #c3c5d9;
+  --td-api-get: #4ade80;
+  --td-api-post: #60a5fa;
+  --td-api-put: #fbbf24;
+  --td-api-patch: #fbbf24;
+  --td-api-delete: #f87171;
+  --td-api-default: #a5b4fc;
+}
+
+html.td-api-reference.dark {
+  --vp-code-tab-bg: var(--td-api-surface-container);
+  --vp-code-tab-divider: var(--td-api-outline);
+}
+
+/* 正文略增宽，接近参考站「中间文档列」 */
+@media (min-width: 960px) {
+  html.td-api-reference .VPDoc .content-container {
+    max-width: 52rem;
+  }
+}
+
+/* code-group 顶栏：方法徽标在 tab（label）之前 */
+html.td-api-reference .vp-doc .vp-code-group .tabs {
+  align-items: center;
+  gap: 0;
+  padding-left: 8px;
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  margin-right: 10px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--get {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--td-api-get);
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--post {
+  background: rgba(96, 165, 250, 0.14);
+  color: var(--td-api-post);
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--put,
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--patch {
+  background: rgba(251, 191, 36, 0.14);
+  color: var(--td-api-put);
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--delete {
+  background: rgba(248, 113, 113, 0.14);
+  color: var(--td-api-delete);
+}
+
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--head,
+html.td-api-reference .vp-doc .vp-code-group .tabs .td-api-http-method-pill--options {
+  background: rgba(165, 180, 252, 0.14);
+  color: var(--td-api-default);
+}
+
+/* 无 code-group 时的兜底条（与徽标同系） */
+html.td-api-reference .td-api-endpoint-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--td-api-outline);
+  background: var(--td-api-surface-container);
+}
+
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--get {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--td-api-get);
+}
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--post {
+  background: rgba(96, 165, 250, 0.14);
+  color: var(--td-api-post);
+}
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--put,
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--patch {
+  background: rgba(251, 191, 36, 0.14);
+  color: var(--td-api-put);
+}
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--delete {
+  background: rgba(248, 113, 113, 0.14);
+  color: var(--td-api-delete);
+}
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--head,
+html.td-api-reference .td-api-endpoint-fallback .td-api-http-method-pill--options {
+  background: rgba(165, 180, 252, 0.14);
+  color: var(--td-api-default);
+}
+
+html.td-api-reference .td-api-endpoint-fallback__path {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  color: var(--td-api-primary);
+  word-break: break-all;
+}
+
+/* ----- 右侧「请求 / 响应」面板：有内容时隐藏「本页目录」并加宽容器 ----- */
+
+html.td-api-aside-tryit .VPDocAsideOutline {
+  display: none !important;
+}
+
+/* 侧栏内固定请求/响应区：总高度随视口缩小（多留底边距避免裁切）；两卡 flex 平分剩余高度，视口变矮时仍约 50/50 */
+html.td-api-aside-tryit {
+  /* 与 VPDoc 侧栏 padding-top 同源变量，并额外减去底栏/滚动条安全区，防止整块超出可视高度 */
+  --td-api-aside-chrome-top: calc(
+    var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + var(--vp-doc-top-height, 0px) + 48px
+  );
+  --td-api-aside-chrome-bottom: 56px;
+  --td-api-aside-viewport-h: calc(100vh - var(--td-api-aside-chrome-top) - var(--td-api-aside-chrome-bottom));
+}
+
+@supports (height: 100dvh) {
+  html.td-api-aside-tryit {
+    --td-api-aside-viewport-h: calc(100dvh - var(--td-api-aside-chrome-top) - var(--td-api-aside-chrome-bottom));
+  }
+}
+
+html.td-api-aside-tryit .VPDocAside > .td-api-aside-tryit {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  align-self: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--td-api-aside-viewport-h);
+  max-height: var(--td-api-aside-viewport-h);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  overflow: hidden;
+  padding-bottom: 0;
+  overscroll-behavior: contain;
+}
+
+/* 两区域始终均分「面板内」高度（各占约 50%，中间 gap 另算） */
+html.td-api-aside-tryit .VPDocAside > .td-api-aside-tryit .td-api-aside-card {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.td-api-aside-tryit .VPDocAside > .td-api-aside-tryit .td-api-aside-card__toolbar {
+  flex-shrink: 0;
+}
+
+/* flex-basis 用 0% 避免内容把 Response 撑出视口导致无法滚动看完 */
+html.td-api-aside-tryit .VPDocAside > .td-api-aside-tryit .td-api-aside-pre {
+  flex: 1 1 0;
+  flex-basis: 0;
+  min-height: 0;
+  max-height: none;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.td-api-aside-tryit {
+  --td-api-aside-accent: #a78bfa;
+  --td-api-aside-border: rgba(120, 120, 140, 0.35);
+  --td-api-aside-surface: var(--td-api-surface-container);
+  --td-api-aside-toolbar: var(--td-api-surface);
+  --td-api-aside-code-bg: var(--td-api-surface);
+}
+
+html.td-api-aside-tryit.dark {
+  --td-api-aside-border: #2e2e34;
+  --td-api-aside-surface: #1a1a1e;
+  --td-api-aside-toolbar: #141418;
+  --td-api-aside-code-bg: #0f0f12;
+}
+
+@media (min-width: 1280px) {
+  html.td-api-aside-tryit .VPDoc.has-aside .aside {
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-width: 400px;
+    padding-left: 20px;
+  }
+
+  html.td-api-aside-tryit .VPDoc.has-aside .aside-container {
+    width: min(360px, 38vw);
+  }
+
+  html.td-api-aside-tryit .VPDoc.has-aside .aside-curtain {
+    width: min(360px, 38vw);
+  }
+}
