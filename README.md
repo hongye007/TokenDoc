@@ -56,7 +56,29 @@ docs-site/.vitepress/dist/
 
 将该目录内容部署到任意静态托管（Nginx、Caddy、OSS + CDN、Netlify、Cloudflare Pages 等）。文档子域示例：`doc.atomflow.vip` 的站点根指向 **`dist` 内带 `index.html` 的那一层**，HTTPS 由证书或平台托管即可。
 
-示例（服务器上构建并发布）：
+### GitHub Actions → `gh-pages` 分支（服务器无 Node）
+
+仓库已配置 [`.github/workflows/gh-pages.yml`](.github/workflows/gh-pages.yml)：向 **`main`** 推送（或手动 **Run workflow**）时，会在 GitHub 上执行 `npm ci` 与 `npm run docs:build`，并把 **`docs-site/.vitepress/dist/`** 推送到 **`gh-pages`** 分支（与源码 `main` 分离）。
+
+1. 在 GitHub 仓库 **Settings → Actions → General** 中确认 **Workflow permissions** 为「Read and write permissions」（否则无法推送 `gh-pages`）。
+2. 将含本 Workflow 的提交推送到 **`main`**，在仓库 **Actions** 中确认 **Publish static site to gh-pages** 已成功（首次成功后才会出现 **`gh-pages`** 分支）。
+3. 在服务器站点目录克隆静态分支（根目录即网站根，含 `index.html`）：
+
+```bash
+git clone -b gh-pages --single-branch https://github.com/hongye007/TokenDoc.git /var/www/doc.atomflow.vip
+```
+
+4. 之后每次推送 `main` 且 Workflow 成功后，在服务器执行：
+
+```bash
+cd /var/www/doc.atomflow.vip && git pull
+```
+
+若仓库为私有，服务器需配置 [Deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys) 或使用 HTTPS + [fine-grained token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) 拉取。
+
+---
+
+示例（服务器上本地构建并发布）：
 
 ```bash
 npm ci
