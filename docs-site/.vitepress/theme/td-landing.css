@@ -679,11 +679,24 @@ a.td-flow-inline-link:hover {
   border-color: var(--vp-button-brand-active-border);
 }
 
-/* 极速入门：主按钮按下态略浅于默认实心色（用主色 #0057ff） */
+/* 极速入门：主按钮按下不显额外加深；与常态实心一致 */
 .vp-doc .td-flow .td-btn--primary:active {
-  background: var(--td-p-brand);
+  background: var(--vp-button-brand-bg);
   color: var(--vp-button-brand-text);
-  border-color: var(--td-p-brand);
+  border-color: var(--vp-button-brand-border);
+}
+
+.vp-doc .td-flow a.td-btn:not(.td-btn--primary):active {
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+/* 极速入门：鼠标点击后不显「选中」环；键盘 Tab 仍用 focus-visible */
+.vp-doc .td-flow a.td-btn:focus:not(:focus-visible),
+.vp-doc .td-flow button.td-btn:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 /* 键盘焦点：主按钮用白环 + 外圈品牌色，避免「高亮」仅变浅蓝难辨认 */

@@ -13,7 +13,9 @@
     "docs:build": "vitepress build docs-site",
     "docs:build:atomflow": "DOC_BRAND=atomflow vitepress build docs-site",
     "docs:build:minitoken": "DOC_BRAND=minitoken vitepress build docs-site",
-    "docs:preview": "vitepress preview docs-site"
+    "docs:preview": "vitepress preview docs-site",
+    "screenshots:mask-logo": "node scripts/mask-screenshot-logo.mjs",
+    "screenshots:mask-logo:write": "node scripts/mask-screenshot-logo.mjs --write"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "turndown": "^7.2.4"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "vitepress": "^1.6.4",
     "vue": "^3.5.34"
   }

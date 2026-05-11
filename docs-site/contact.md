@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 关于我们
-description: 品牌故事、核心价值与联络方式
+description: 核心价值与联络方式
 sidebar: false
 aside: false
 outline: false
@@ -21,35 +21,10 @@ pageClass: td-contact-page
   </div>
 </section>
 
-<section class="td-contact__section" aria-labelledby="td-contact-story">
-  <div class="td-contact__inner">
-    <div class="td-contact__grid-2">
-      <div class="td-contact__story">
-        <h2 id="td-contact-story">品牌故事</h2>
-        <div class="td-contact__prose">
-          <p>@TD_BRAND_DISPLAY@ 源于一个简单的发现：AI 创新的最大障碍不在于缺乏想法，而在于基础设施的碎片化。在不同的集群中获取高性能算力过去一直是一个手动且容易出错的瓶颈。</p>
-          <p>我们着手构建一个将基础设施视为代码、将算力视为流动商品的平台。从统一的 API 网关到可观测与配额管理，我们致力于在大规模环境下处理负载均衡、延迟优化与安全保障。</p>
-        </div>
-      </div>
-      <figure class="td-contact__figure">
-        <img
-          src="@TD_SCREENSHOT_CONTACT@"
-          width="960"
-          height="540"
-          alt="高密度机柜与数据线缆的特写示意，代表 AI 算力基础设施"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </div>
-  </div>
-</section>
-
 <section class="td-contact__section td-contact__section--values" aria-labelledby="td-contact-values">
   <div class="td-contact__inner">
     <div class="td-contact__section-head">
       <h2 id="td-contact-values">核心价值</h2>
-      <p>指导我们每一行代码的核心原则。</p>
     </div>
     <div class="td-contact__grid-3">
       <div class="td-contact__value-card">

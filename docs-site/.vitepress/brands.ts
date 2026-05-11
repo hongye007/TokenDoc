@@ -22,7 +22,7 @@ export interface BrandThemePalette {
 export interface BrandScreenshots {
   /** 首页「架构可视化」大图 */
   landingArchitecture: string;
-  /** 关于我们页品牌故事配图 */
+  /** 预留：Markdown 中 @TD_SCREENSHOT_CONTACT@ 等配图 URL */
   contactHero: string;
 }
 

@@ -40,7 +40,7 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="@TD_REGISTER_URL@" target="_blank" rel="noopener noreferrer">注册入口</a>
+      <a class="td-btn" href="@TD_REGISTER_URL@" target="_blank" rel="noopener noreferrer">注册入口</a>
       <a class="td-btn" href="@TD_LOGIN_URL@" target="_blank" rel="noopener noreferrer">登录入口</a>
       <a class="td-flow-inline-link" href="./settings/user/auth">用户指南 · 登录注册</a>
     </div>
@@ -67,7 +67,7 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="@TD_CONSOLE@/topup" target="_blank" rel="noopener noreferrer">充值入口</a>
+      <a class="td-btn" href="@TD_CONSOLE@/topup" target="_blank" rel="noopener noreferrer">充值入口</a>
       <a class="td-flow-inline-link" href="./settings/user/topup">用户指南 · 钱包管理</a>
     </div>
     <div class="td-flow-shots td-flow-shots--single" role="group" aria-label="控制台钱包与充值界面参考">
@@ -89,7 +89,7 @@ aside: false
   </div>
   <div class="td-flow-panel">
     <div class="td-flow-actions td-flow-actions--lead">
-      <a class="td-btn td-btn--primary" href="@TD_CONSOLE@/token" target="_blank" rel="noopener noreferrer">令牌管理</a>
+      <a class="td-btn" href="@TD_CONSOLE@/token" target="_blank" rel="noopener noreferrer">令牌管理</a>
       <a class="td-flow-inline-link" href="./settings/user/token">用户指南 · 令牌管理</a>
       <a class="td-flow-inline-link" href="./api/">API 参考</a>
     </div>

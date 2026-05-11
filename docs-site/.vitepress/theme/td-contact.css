@@ -82,9 +82,18 @@ html:not(.dark) .td-contact {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3rem var(--td-c-gutter);
+  padding: 3rem max(var(--td-c-gutter), env(safe-area-inset-left, 0px))
+    3rem max(var(--td-c-gutter), env(safe-area-inset-right, 0px));
   text-align: center;
   min-height: 300px;
+}
+
+@media (max-width: 480px) {
+  .td-contact__hero {
+    min-height: 0;
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem;
+  }
 }
 
 /* 首屏：椭圆形透明蓝渐变 + 轻模糊，与 #131315 底融在一起 */
@@ -116,7 +125,8 @@ html:not(.dark) .td-contact {
 .td-contact__hero-inner {
   position: relative;
   z-index: 2;
-  max-width: var(--td-c-container);
+  width: 100%;
+  max-width: min(var(--td-c-container), 100%);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -153,20 +163,25 @@ html:not(.dark) .td-contact__hero-title {
   }
 }
 
+@media (max-width: 380px) {
+  .td-contact__hero-title {
+    font-size: clamp(1.375rem, 8.5vw, 2.25rem);
+  }
+}
+
 .td-contact__hero-lead {
   margin: 0;
   width: 100%;
-  max-width: min(100%, calc(100vw - 3rem));
-  font-size: 1.125rem;
+  max-width: min(42rem, 100%);
+  padding: 0 0.25rem;
+  font-size: clamp(0.9375rem, 3.2vw, 1.125rem);
   line-height: 1.55;
   font-weight: 400;
   color: var(--td-c-on-surface-variant);
-  white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
   text-align: center;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .td-contact__section {
@@ -181,64 +196,6 @@ html:not(.dark) .td-contact__hero-title {
 .td-contact__inner {
   max-width: var(--td-c-container);
   margin: 0 auto;
-}
-
-.td-contact__grid-2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .td-contact__grid-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.td-contact__story h2 {
-  margin: 0 0 2rem;
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--td-c-on-surface);
-  border: none;
-  padding: 0;
-}
-
-.td-contact__prose {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--td-c-on-surface-variant);
-}
-
-.td-contact__prose p {
-  margin: 0;
-}
-
-.td-contact__figure {
-  position: relative;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  background: var(--td-c-surface-high);
-  border: 1px solid var(--td-c-outline-variant);
-}
-
-.td-contact__figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1);
-  transition: filter 0.7s ease;
-}
-
-.td-contact__figure:hover img {
-  filter: grayscale(0);
 }
 
 .td-contact__section--values {

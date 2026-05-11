@@ -111,7 +111,7 @@ async function sendRequest() {
 
 <template>
   <div class="td-qs-playground">
-    <button type="button" class="td-btn td-btn--primary td-qs-playground__trigger" @click="open = true">
+    <button type="button" class="td-btn td-qs-playground__trigger" @click="open = true">
       试一试
     </button>
 
@@ -137,7 +137,7 @@ async function sendRequest() {
           <div class="td-qs-playground__top-actions">
             <button
               type="button"
-              class="td-btn td-btn--primary td-qs-playground__send"
+              class="td-btn td-qs-playground__send"
               :disabled="sending"
               @click="sendRequest"
             >
