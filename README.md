@@ -93,6 +93,27 @@ DOC_BRAND=minitoken npm run docs:build
 rsync -a --delete docs-site/.vitepress/dist-minitoken/ /var/www/doc.minitoken.vip/
 ```
 
+### 两台机器 + Nginx（AtomFlow / 微词元）
+
+两个品牌可以各部署在**独立机器**上：每台只拉自己的 **`gh-pages-<品牌>`**（或 rsync 自己的 `dist-*`），**Nginx 配置结构相同**，一般只需改 **`server_name`、`root`**（以及该机上的 **`ssl_certificate`** 路径，若按域名分证书）。
+
+| 机器 | 文档域名（示例） | `root`（示例） |
+|------|------------------|----------------|
+| AtomFlow | `doc.atomflow.vip` | `/var/www/doc.atomflow.vip`（`gh-pages-atomflow` 内容） |
+| 微词元 | `doc.minitoken.vip` | `/var/www/doc.minitoken.vip`（`gh-pages-minitoken` 内容） |
+
+`location /` 可共用同一逻辑，例如：
+
+```nginx
+root /var/www/doc.minitoken.vip;   # 另一台机器改为 atomflow 对应路径
+index index.html;
+location / {
+  try_files $uri $uri.html $uri/ /index.html;
+}
+```
+
+静态资源缓存、`listen` / HTTPS 等与常规静态站相同；**不要**把一台机器的 `root` 指到另一品牌的产物目录。
+
 ---
 
 ## 常见问题
