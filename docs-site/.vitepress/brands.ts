@@ -48,10 +48,15 @@ export interface BrandProfile {
   /** 对比表域名小字，如 atomflow.vip */
   domainLabel: string;
   /**
-   * 产品主站 origin（注册/控制台/API 示例等 Markdown 占位符与网关常量均基于此）。
+   * 产品主站 origin（注册/控制台、@TD_MAIN_SITE@ 等 Markdown 占位符均基于此）。
    * 勿填第三方文档或演示站域名。
    */
   mainSiteUrl: string;
+  /**
+   * OpenAI 兼容 API 网关 origin（文档 `@TD_GATEWAY_V1@`、`@TD_API_GATEWAY_ORIGIN@`、构建期 `__TD_GATEWAY_V1__`）。
+   * AtomFlow / 微词元均使用 `https://api.<品牌主域>`；缺省则回退为 mainSiteUrl。
+   */
+  apiGatewayUrl?: string;
   /**
    * 顶栏「主站入口」链接（自有官网或控制台根地址）。
    * 缺省时同 mainSiteUrl。勿填 New API 等第三方站点（例如 www.newapi.ai 文档站）。
@@ -77,6 +82,7 @@ const BRANDS: Record<BrandId, BrandProfile> = {
     apiProductTableLabel: "AtomFlow API (本站)",
     domainLabel: "atomflow.vip",
     mainSiteUrl: "https://atomflow.vip",
+    apiGatewayUrl: "https://api.atomflow.vip",
     portalUrl: "https://atomflow.vip",
     supportEmail: "atomflow.vip@gmail.com",
     screenshots: {
@@ -101,6 +107,7 @@ const BRANDS: Record<BrandId, BrandProfile> = {
     apiProductTableLabel: "MiniToken 微词元 API (本站)",
     domainLabel: "minitoken.vip",
     mainSiteUrl: "https://minitoken.vip",
+    apiGatewayUrl: "https://api.minitoken.vip",
     portalUrl: "https://minitoken.vip",
     supportEmail: "atomflow.vip@gmail.com",
     screenshots: {
@@ -170,15 +177,27 @@ export function navPortalOrigin(b: BrandProfile): string {
   return trimOrigin(b.portalUrl ?? b.mainSiteUrl);
 }
 
+/** OpenAI 兼容 API 网关 origin（与 `apiGatewayUrl` 一致；缺省同 mainSiteUrl） */
+export function apiGatewayOrigin(b: BrandProfile): string {
+  return trimOrigin(b.apiGatewayUrl ?? b.mainSiteUrl);
+}
+
+/** OpenAI 兼容网关 `…/v1` 前缀 */
+export function gatewayV1Base(b: BrandProfile): string {
+  return `${apiGatewayOrigin(b)}/v1`;
+}
+
 /** 将 Markdown 中的 @TD_*@ 占位符替换为当前品牌值（构建时） */
 export function applyBrandPlaceholdersToMarkdown(src: string, b: BrandProfile): string {
   const origin = trimOrigin(b.mainSiteUrl);
+  const apiOrigin = apiGatewayOrigin(b);
   const pairs: [string, string][] = [
     ["@TD_MAIN_SITE@", origin],
+    ["@TD_API_GATEWAY_ORIGIN@", apiOrigin],
     ["@TD_REGISTER_URL@", `${origin}/register`],
     ["@TD_LOGIN_URL@", `${origin}/login`],
     ["@TD_CONSOLE@", `${origin}/console`],
-    ["@TD_GATEWAY_V1@", `${origin}/v1`],
+    ["@TD_GATEWAY_V1@", gatewayV1Base(b)],
     ["@TD_BRAND_DISPLAY@", b.displayName],
     ["@TD_API_PRODUCT_LABEL@", b.apiProductTableLabel],
     ["@TD_DOMAIN_LABEL@", b.domainLabel],

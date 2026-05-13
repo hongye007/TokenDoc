@@ -18,7 +18,7 @@ outline: false
 | 路径 | `/v1/messages` |
 | 请求头 | `x-api-key` 或等价鉴权；**`anthropic-version: 2023-06-01`**（必填） |
 
-使用 Anthropic 官方 SDK 时，Base URL 一般为**网关根地址**（是否带 `/v1` 以 SDK 与网关约定为准）。本站示例使用 **`@TD_MAIN_SITE@`**，请求路径仍为 **`/v1/messages`**。
+使用 Anthropic 官方 SDK 时，Base URL 一般为**网关根地址**（是否带 `/v1` 以 SDK 与网关约定为准）。本站示例使用 **`@TD_API_GATEWAY_ORIGIN@`**，请求路径仍为 **`/v1/messages`**。
 
 ## 请求头
 

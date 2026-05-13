@@ -20,8 +20,6 @@ outline: false
 | 路径 | `/v1/rerank` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关：`@TD_GATEWAY_V1@`。
-
 ## 请求体
 - **`model`**：重排序模型 ID（如 `BAAI/bge-reranker-v2-m3`、`qwen3-rerank` 等，以网关为准）。  
 - **`query`**：查询语句。  

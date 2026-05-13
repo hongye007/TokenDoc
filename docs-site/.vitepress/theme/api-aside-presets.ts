@@ -127,8 +127,8 @@ export type AsidePreset = { snippets: Record<AsideLang, string>; response: strin
 
 const HOST_V1 = BASE;
 
-/** Anthropic SDK：通常使用网关根，是否带 `/v1` 以 SDK 与网关约定为准。 */
-const ANTHROPIC_ORIGIN = __TD_MAIN_SITE__;
+/** Anthropic SDK：网关根与 OpenAI 兼容层同域（`api.*`）。 */
+const ANTHROPIC_ORIGIN = __TD_API_GATEWAY_ORIGIN__;
 
 export const GET_MODEL_RESPONSE = `{
   "id": "gpt-5.4",

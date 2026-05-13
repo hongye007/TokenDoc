@@ -15,8 +15,6 @@ apiPath: /v1beta/models
 | 路径 | `/v1beta/models` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关根：`@TD_MAIN_SITE@`（请按部署替换）。
-
 ## 认证
 
 | Header | 说明 |
@@ -26,7 +24,7 @@ apiPath: /v1beta/models
 ## 请求示例
 
 ```bash
-curl -sS "@TD_MAIN_SITE@/v1beta/models" \
+curl -sS "@TD_API_GATEWAY_ORIGIN@/v1beta/models" \
   -H "Authorization: Bearer sk-your-token"
 ```
 

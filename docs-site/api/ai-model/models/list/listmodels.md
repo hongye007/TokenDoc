@@ -20,7 +20,7 @@ outline: false
 | 路径 | `/v1/models` |
 | 认证 | `Authorization: Bearer <token>` |
 
-下文示例以 `@TD_MAIN_SITE@` 为网关根地址；自建部署请替换为你的 API 根 URL。
+下文示例请求 URL 以 **`@TD_GATEWAY_V1@`** 为 OpenAI 兼容前缀；自建部署请替换为你的 API 根 URL。
 
 ## 认证
 

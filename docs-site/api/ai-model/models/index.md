@@ -1,6 +1,6 @@
 ---
 title: "模型列表"
-description: 列出与发现模型：OpenAI / Gemini 列表及单模型查询说明（含右侧多语言请求与响应示例）
+description: 列出与发现模型：OpenAI / Gemini 列表及单模型查询说明
 outline: false
 apiMethod: GET
 apiPath: /v1/models
@@ -9,10 +9,6 @@ apiPath: /v1/models
 # 模型列表
 
 本组接口用于在调用对话、补全等能力之前，**拉取当前账号可见的模型清单**（及可选的单模型详情），并与控制台、模型广场中展示的可用范围相对应。
-
-在 **本页与 [列出模型（OpenAI 格式）](./list/listmodels)** 的桌面视图下，右侧提供 **多语言请求示例**（cURL、Python、JavaScript、Go、PHP）与 **JSON 响应样例**（网关 Base URL 以文档示例 `@TD_DOMAIN_LABEL@` 为准，请替换为你的部署地址）。
-
-网关可能在同一路径上按请求头返回 **OpenAI**、**Anthropic** 或 **Gemini** 形态的列表；另提供 **Gemini 原生** 路径，便于已对接 Google API 形态的客户端直接使用。
 
 ## 接口一览
 

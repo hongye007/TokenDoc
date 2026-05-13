@@ -4,8 +4,10 @@ import type { Plugin } from "vite";
 import { defineConfig } from "vitepress";
 import type { DefaultTheme } from "vitepress";
 import {
+  apiGatewayOrigin,
   applyBrandPlaceholdersToMarkdown,
   buildBrandThemeStyleCss,
+  gatewayV1Base,
   navPortalOrigin,
   resolveBrand,
   trimOrigin,
@@ -197,8 +199,9 @@ export default defineConfig({
   },
   vite: {
     define: {
-      __TD_GATEWAY_V1__: JSON.stringify(`${trimOrigin(brand.mainSiteUrl)}/v1`),
+      __TD_GATEWAY_V1__: JSON.stringify(gatewayV1Base(brand)),
       __TD_MAIN_SITE__: JSON.stringify(trimOrigin(brand.mainSiteUrl)),
+      __TD_API_GATEWAY_ORIGIN__: JSON.stringify(apiGatewayOrigin(brand)),
     },
     plugins: [tdBrandMarkdownPlugin(brand, SITE)],
   },

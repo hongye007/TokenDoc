@@ -18,8 +18,6 @@ outline: false
 | 路径 | `/v1/responses` |
 | 认证 | `Authorization: Bearer <token>` |
 
-示例网关：`@TD_GATEWAY_V1@`。
-
 ## Request Body
 - **`model`**：模型 ID。  
 - **`input`**：由对话项组成的列表；项可为 `message`、`function_call`、`function_call_output` 等类型。  
