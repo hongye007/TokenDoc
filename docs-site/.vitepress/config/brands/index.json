@@ -1,4 +1,8 @@
 {
-  "brands": ["atomflow", "minitoken"],
+  "brands": [
+    "atomflow",
+    "console",
+    "minitoken"
+  ],
   "defaultBrand": "atomflow"
 }
