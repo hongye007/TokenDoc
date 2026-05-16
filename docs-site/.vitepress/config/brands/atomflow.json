@@ -1,0 +1,13 @@
+{
+  "id": "atomflow",
+  "nameZh": "原流",
+  "nameEn": "AtomFlow",
+  "mainSiteUrl": "https://atomflow.vip",
+  "logo": "https://i.imgur.com/iOhm0Zv.png",
+  "email": "atomflow.vip@gmail.com",
+  "displayNameFormat": "enParenZh",
+  "navTitleFrom": "nameEn",
+  "overrides": {
+    "footerCopyright": "© 2026 AtomFlow.原子流动"
+  }
+}

@@ -31,7 +31,7 @@ npm ci
 | `npm run docs:preview` | 预览（需已用**同一** `DOC_BRAND` 构建过；默认预览 atomflow 对应产物） |
 | `npm run docs:patch` | 对已有 Markdown 做路径反引号与 `<占位符>` 转义（构建报错时可再执行） |
 
-环境变量 **`DOC_BRAND`**：`atomflow`（默认）或 `minitoken`。每个品牌在 **`docs-site/.vitepress/brands.ts`** 的 **`BRAND_INPUTS`** 中填 **中文名、英文名、主站 URL、Logo、邮箱**；可选 **`qqGroup`（群号）**、**`qqGroupUrl`（入群链接）**（未填群号则用 `brand-common.ts` 默认；群号设 `""` 则联系页不展示 QQ）。`api.<主域>`、展示名、顶栏标题等由公共配置推导；主题色、页脚版权等在 **`brand-personalization.ts`** 覆盖。占位符含 **`@TD_SUPPORT_EMAIL@`**、**`@TD_QQ_GROUP@`**、**`@TD_QQ_CHANNEL_BLOCK@`** 等；`public/*.html` 在 **构建完成时** 按品牌替换。
+环境变量 **`DOC_BRAND`**：`atomflow`（默认）或 `minitoken`（列表见 **`config/brands/index.json`**）。品牌数据在 **`docs-site/.vitepress/config/brands/`**：**`shared.json`**（公共默认 QQ、截图、合规模板等）+ **`<id>.json`**（中文名、英文名、主站 URL、Logo、邮箱；可选 `qqGroup` / `qqGroupUrl`；`overrides` 内可覆盖主题、页脚等）。**`brands.ts`** 仅负责加载 JSON 与占位符替换。新增品牌：在 `index.json` 登记 id，新增 `<id>.json`，无需改 TypeScript。
 
 ---
 
@@ -40,7 +40,7 @@ npm ci
 | 路径 | 说明 |
 |------|------|
 | `docs-site/` | VitePress **文档根**（`config.mts`、主题、Markdown 正文） |
-| `docs-site/.vitepress/` | 主题（`theme/`）、`config.mts`、**`brands.ts` / `brand-common.ts` / `brand-personalization.ts`（多品牌）** |
+| `docs-site/.vitepress/` | 主题（`theme/`）、`config.mts`、**`config/brands/*.json`**、**`brands.ts`（加载与推导）** |
 | `docs-site/settings/` | 用户指南 Markdown |
 | `docs-site/api/` | API 参考 Markdown |
 | `docs-site/public/` | 静态资源；根路径下独立 HTML（如法律页、关于我们独立导出）会原样复制到 `dist/` |

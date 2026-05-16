@@ -1,37 +1,46 @@
 /**
- * 多品牌构建：通过环境变量 DOC_BRAND 选择（默认 atomflow）。
- * 构建：DOC_BRAND=minitoken npm run docs:build
+ * 多品牌构建：通过环境变量 DOC_BRAND 选择（默认见 config/brands/index.json）。
  *
- * 各品牌 **仅需配置必选字段**（见 BRAND_INPUTS）；其余由公共配置 + 推导规则生成。
- * 主题、页脚版权等差异见 brand-personalization.ts；共用常量见 brand-common.ts。
- *
- * 正文 Markdown 占位符见 applyBrandPlaceholdersToMarkdown。
+ * 品牌数据：config/brands/shared.json（公共）+ config/brands/<id>.json（各品牌）
+ * 本文件：加载配置、推导 BrandProfile、占位符替换。
  */
 
 import {
   apiOriginFromMainSite,
-  BRAND_DEFAULT_META_DESCRIPTION,
-  BRAND_DEFAULT_QQ_GROUP,
-  BRAND_DEFAULT_QQ_GROUP_URL,
-  BRAND_DEFAULT_THEME,
-  BRAND_LEGAL_BODY,
-  BRAND_SCREENSHOTS,
   buildFooterLegalText,
   domainFromMainSite,
+  formatDisplayName,
+  resolveNavTitle,
   siteTitleHtml,
   type BrandId,
+  type BrandPersonalization,
+  type BrandSharedConfig,
   type BrandThemePalette,
+  type DisplayNameFormat,
+  type NavTitleFrom,
 } from "./brand-common";
-import { BRAND_PERSONALIZATION } from "./brand-personalization";
+import {
+  brandIds,
+  defaultBrandId,
+  loadBrandConfigBundle,
+  personalizationFor,
+  toBrandInput,
+} from "./load-brand-config";
 
-export type { BrandId, BrandPersonalization, BrandThemePalette } from "./brand-common";
+export type {
+  BrandId,
+  BrandPersonalization,
+  BrandThemePalette,
+  DisplayNameFormat,
+  NavTitleFrom,
+} from "./brand-common";
 
 export interface BrandScreenshots {
   landingArchitecture: string;
   contactHero: string;
 }
 
-/** 各品牌必填：中文名、英文名、主站 URL、Logo、联系邮箱 */
+/** 各品牌必填字段（由 JSON 加载） */
 export interface BrandInput {
   id: BrandId;
   nameZh: string;
@@ -39,13 +48,12 @@ export interface BrandInput {
   mainSiteUrl: string;
   logo: string;
   email: string;
-  /** QQ 客服群号（可选；未填用 brand-common 默认；`""` 表示不展示） */
   qqGroup?: string;
-  /** QQ 入群链接（可选；有群号、无链接时仅展示群号） */
   qqGroupUrl?: string;
+  displayNameFormat?: DisplayNameFormat;
+  navTitleFrom?: NavTitleFrom;
 }
 
-/** 构建后的完整品牌配置（供 VitePress / 占位符替换使用） */
 export interface BrandProfile {
   id: BrandId;
   nameZh: string;
@@ -61,9 +69,7 @@ export interface BrandProfile {
   apiGatewayUrl: string;
   portalUrl: string;
   supportEmail: string;
-  /** 已配置群号时存在；无 QQ 联系渠道时为 undefined */
   qqGroup?: string;
-  /** 入群链接；未配置时 undefined */
   qqGroupUrl?: string;
   screenshots: BrandScreenshots;
   theme: BrandThemePalette;
@@ -71,44 +77,22 @@ export interface BrandProfile {
   footerCopyright: string;
 }
 
-const DISPLAY_NAME: Record<BrandId, (i: BrandInput) => string> = {
-  atomflow: ({ nameEn, nameZh }) => `${nameEn}（${nameZh}）`,
-  minitoken: ({ nameEn, nameZh }) => `${nameEn} ${nameZh}`,
-};
+const DEFAULT_DISPLAY_FORMAT: DisplayNameFormat = "enParenZh";
+const DEFAULT_NAV_FROM: NavTitleFrom = "nameEn";
 
-const NAV_TITLE: Record<BrandId, (i: BrandInput) => string> = {
-  atomflow: ({ nameEn }) => nameEn,
-  minitoken: ({ nameZh }) => nameZh,
-};
-
-/** 各品牌必选字段（新增品牌在此追加一行，并在 brand-personalization 中按需加覆盖） */
-const BRAND_INPUTS: BrandInput[] = [
-  {
-    id: "atomflow",
-    nameZh: "原流",
-    nameEn: "AtomFlow",
-    mainSiteUrl: "https://atomflow.vip",
-    logo: "https://i.imgur.com/iOhm0Zv.png",
-    email: "atomflow.vip@gmail.com",
-  },
-  {
-    id: "minitoken",
-    nameZh: "微词元",
-    nameEn: "MiniToken",
-    mainSiteUrl: "https://minitoken.vip",
-    logo: "https://i.imgur.com/OiMS4BR.png",
-    email: "atomflow.vip@gmail.com",
-  },
-];
+function sharedConfig(): BrandSharedConfig {
+  return loadBrandConfigBundle().shared;
+}
 
 function resolveQqContact(
   input: BrandInput,
-  p: (typeof BRAND_PERSONALIZATION)[BrandId],
+  p: BrandPersonalization,
+  shared: BrandSharedConfig,
 ): Pick<BrandProfile, "qqGroup" | "qqGroupUrl"> {
-  const groupRaw = input.qqGroup ?? p?.qqGroup ?? BRAND_DEFAULT_QQ_GROUP;
+  const groupRaw = input.qqGroup ?? p.qqGroup ?? shared.defaultQqGroup;
   const group = groupRaw.trim();
   if (!group) return {};
-  const urlRaw = input.qqGroupUrl ?? p?.qqGroupUrl ?? BRAND_DEFAULT_QQ_GROUP_URL;
+  const urlRaw = input.qqGroupUrl ?? p.qqGroupUrl ?? shared.defaultQqGroupUrl;
   const url = urlRaw.trim();
   return {
     qqGroup: group,
@@ -116,7 +100,6 @@ function resolveQqContact(
   };
 }
 
-/** 关于我们页 QQ 渠道整块 HTML；无群号时为空 */
 export function buildContactQqChannelBlock(b: BrandProfile): string {
   if (!b.qqGroup) return "";
   const link = b.qqGroupUrl
@@ -140,7 +123,6 @@ export function buildContactQqChannelBlock(b: BrandProfile): string {
       </div>`;
 }
 
-/** 公告内嵌页 QQ 行；无群号时为空 */
 export function buildAnnouncementQqRowBlock(b: BrandProfile): string {
   if (!b.qqGroup) return "";
   const linkPart = b.qqGroupUrl
@@ -161,12 +143,20 @@ export function buildAnnouncementQqRowBlock(b: BrandProfile): string {
 }
 
 function buildBrandProfile(input: BrandInput): BrandProfile {
-  const p = BRAND_PERSONALIZATION[input.id] ?? {};
+  const shared = sharedConfig();
+  const p = personalizationFor(input.id);
   const mainSiteUrl = trimOrigin(input.mainSiteUrl);
   const domainLabel = domainFromMainSite(mainSiteUrl);
   const apiGatewayUrl = apiOriginFromMainSite(mainSiteUrl);
-  const displayName = p.displayName ?? DISPLAY_NAME[input.id](input);
-  const navTitle = p.navTitle ?? NAV_TITLE[input.id](input);
+  const displayName =
+    p.displayName ??
+    formatDisplayName(
+      input.displayNameFormat ?? DEFAULT_DISPLAY_FORMAT,
+      input.nameEn,
+      input.nameZh,
+    );
+  const navTitle =
+    p.navTitle ?? resolveNavTitle(input.navTitleFrom ?? DEFAULT_NAV_FROM, input.nameEn, input.nameZh);
 
   return {
     id: input.id,
@@ -174,28 +164,32 @@ function buildBrandProfile(input: BrandInput): BrandProfile {
     nameEn: input.nameEn,
     siteTitleHtml: siteTitleHtml(navTitle),
     docTitle: p.docTitle ?? `${input.nameEn} 文档`,
-    metaDescription: p.metaDescription ?? BRAND_DEFAULT_META_DESCRIPTION,
+    metaDescription: p.metaDescription ?? shared.defaultMetaDescription,
     logo: input.logo,
     displayName,
     apiProductTableLabel:
       p.apiProductTableLabel ??
-      (input.id === "minitoken" ? `${displayName} API (本站)` : `${input.nameEn} API (本站)`),
+      (input.displayNameFormat === "enSpaceZh"
+        ? `${displayName} API (本站)`
+        : `${input.nameEn} API (本站)`),
     domainLabel,
     mainSiteUrl,
     apiGatewayUrl,
     portalUrl: mainSiteUrl,
     supportEmail: input.email,
-    ...resolveQqContact(input, p),
-    screenshots: { ...BRAND_SCREENSHOTS },
-    theme: p.theme ?? BRAND_DEFAULT_THEME,
-    footerLegalText: buildFooterLegalText(displayName),
+    ...resolveQqContact(input, p, shared),
+    screenshots: { ...shared.screenshots },
+    theme: p.theme ?? shared.defaultTheme,
+    footerLegalText: buildFooterLegalText(displayName, shared.legalBody),
     footerCopyright: p.footerCopyright ?? `© 2026 ${input.nameEn}.${input.nameZh}`,
   };
 }
 
-const BRANDS: Record<BrandId, BrandProfile> = Object.fromEntries(
+const BRAND_INPUTS: BrandInput[] = loadBrandConfigBundle().files.map(toBrandInput);
+
+const BRANDS: Record<string, BrandProfile> = Object.fromEntries(
   BRAND_INPUTS.map((input) => [input.id, buildBrandProfile(input)]),
-) as Record<BrandId, BrandProfile>;
+);
 
 export function trimOrigin(url: string): string {
   return url.replace(/\/$/, "");
@@ -260,14 +254,22 @@ export function buildBrandThemeStyleCss(b: BrandProfile): string | null {
 }
 
 export function resolveBrand(raw: string | undefined): BrandProfile {
-  const id = (raw || "atomflow").trim().toLowerCase() as BrandId;
-  if (id !== "atomflow" && id !== "minitoken") {
+  const allowed = brandIds();
+  const id = (raw || defaultBrandId()).trim().toLowerCase();
+  if (!allowed.includes(id)) {
     throw new Error(
-      `[brands] 未知的 DOC_BRAND="${raw}"。允许值：atomflow、minitoken。示例：DOC_BRAND=minitoken npm run docs:build`,
+      `[brands] 未知的 DOC_BRAND="${raw}"。允许值：${allowed.join("、")}。示例：DOC_BRAND=${allowed[1] ?? allowed[0]} npm run docs:build`,
     );
   }
-  return BRANDS[id];
+  const profile = BRANDS[id];
+  if (!profile) {
+    throw new Error(`[brands] 未找到品牌配置：${id}.json`);
+  }
+  return profile;
 }
 
 export { BRAND_INPUTS };
-export { BRAND_LEGAL_BODY, BRAND_DEFAULT_QQ_GROUP, BRAND_DEFAULT_QQ_GROUP_URL } from "./brand-common";
+
+export function getBrandSharedConfig(): BrandSharedConfig {
+  return sharedConfig();
+}

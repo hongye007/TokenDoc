@@ -1,0 +1,14 @@
+{
+  "defaultMetaDescription": "API 网关文档：介绍、入门、设置与 API 参考",
+  "legalBody": "致力于为合法合规的业务需求提供技术基础设施。用户在使用本服务时必须遵守当地法律法规。本平台不提供任何违反特定国家政策的非法访问途径。所有模型接口均通过官方正规渠道聚合，我们仅作为技术中间层提供优化加速与管理工具。如有任何疑问或合规需求，请联系我们的法务部门。",
+  "defaultQqGroup": "1103370311",
+  "defaultQqGroupUrl": "https://qun.qq.com/universal-share/share?ac=1&authKey=gUV7ogEcA3IzuPcz2fa3u/NAPvo/DlZkd8XkuLg3GoaS7Tcq6ndnqCwbSTEYCdtf&busi_data=eyJncm91cENvZGUiOiIxMTAzMzcwMzExIiwidG9rZW4iOiJyNzNpUnZDanRJbHFUMVd1WmNFWHFQeWNHOG0zZE1oQllXQzkxWGU2TWdOWmNUbkNJdUgva0hnTWFZYW5iUEpkIiwidWluIjoiOTM1NzYzMzY3In0=&data=w4FFcLX89f32nv68biGsuKKNwqTeU2XigqdGljSk63qmVEY6E9uJE_8CVmOmMId3Md8UGguG3vdr90lPvTZI7Q&svctype=4&tempid=h5_group_info",
+  "screenshots": {
+    "landingArchitecture": "https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7ibk5jGluZPOPJM68vhwapVtf5hLZysIRCm5rg4qXeRP9PkrLzFwPBHnSVHi2eUB0o0PWKA-vI6f2hHskghevMcuNPlrLf09tGElXi_7QloFc6DZtpVTItq7hmHbh3eQlL6vMsQpNLX2pb3rCx1FuVZxwX_kYkGQ8DT-6VJDtjNNopFcByIBFLP30eQdhrr9LP5BtTrKh3ZntrRteA-4yWhwmAa4fdQGPiYcdUED8S9c2k7o8_XWFCSc2Whz70x0cf2kFDEGeEo",
+    "contactHero": "https://lh3.googleusercontent.com/aida-public/AB6AXuBwTKOBz__1IernRXQXk-SCLJkfBmIunImEJXFbJBg4lG934jFFyafBD4M7zOn2Un00HD5-8tXsL-yFOxvhCbr7KKFA7hA_UNZc4ph-ka0twjdLQ4K_kT7llSu89nQcLpou0bs1Xi7uK4uB6bV0lcCVBicDZa7GmVCkmDNJqds5sgnv7266jmRN23v4vZqQqvsiqumWx_wJB5lcU_ewpMNwo6iQF1Bx6c0pRitHdwvSJUb9hQGSElM3W0sK1A6lKUrNqq5wHZEniSQ"
+  },
+  "defaultTheme": {
+    "themeColorLight": "#ffffff",
+    "themeColorDark": "#08132a"
+  }
+}
