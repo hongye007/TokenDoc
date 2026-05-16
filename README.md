@@ -31,7 +31,7 @@ npm ci
 | `npm run docs:preview` | 预览（需已用**同一** `DOC_BRAND` 构建过；默认预览 atomflow 对应产物） |
 | `npm run docs:patch` | 对已有 Markdown 做路径反引号与 `<占位符>` 转义（构建报错时可再执行） |
 
-环境变量 **`DOC_BRAND`**：`atomflow`（默认）或 `minitoken`。每个品牌在 **`docs-site/.vitepress/brands.ts`** 中维护：**Logo**、**展示名**、**`mainSiteUrl`**（官网/控制台相关占位符）、**`apiGatewayUrl`**（一般为 `https://api.<主域>`，与 `@TD_GATEWAY_V1@` / `@TD_API_GATEWAY_ORIGIN@` 及主题侧栏示例一致；缺省回退为 `mainSiteUrl`）、**`portalUrl`（顶栏「主站入口」，缺省同 mainSiteUrl；勿填第三方文档站）**、**关于页/首页截图 URL**、**主题色**、顶栏标题 HTML、页脚文案等。正文 Markdown 使用 **`@TD_MAIN_SITE@`**、**`@TD_REGISTER_URL@`**、**`@TD_GATEWAY_V1@`**、**`@TD_BRAND_DISPLAY@`** 等占位符（构建时按品牌替换）；新增品牌在该文件扩展并同步更新 GitHub Actions 矩阵即可。
+环境变量 **`DOC_BRAND`**：`atomflow`（默认）或 `minitoken`。每个品牌在 **`docs-site/.vitepress/brands.ts`** 的 **`BRAND_INPUTS`** 中填 **中文名、英文名、主站 URL、Logo、邮箱**；可选 **`qqGroup`（群号）**、**`qqGroupUrl`（入群链接）**（未填群号则用 `brand-common.ts` 默认；群号设 `""` 则联系页不展示 QQ）。`api.<主域>`、展示名、顶栏标题等由公共配置推导；主题色、页脚版权等在 **`brand-personalization.ts`** 覆盖。占位符含 **`@TD_SUPPORT_EMAIL@`**、**`@TD_QQ_GROUP@`**、**`@TD_QQ_CHANNEL_BLOCK@`** 等；`public/*.html` 在 **构建完成时** 按品牌替换。
 
 ---
 
@@ -40,7 +40,7 @@ npm ci
 | 路径 | 说明 |
 |------|------|
 | `docs-site/` | VitePress **文档根**（`config.mts`、主题、Markdown 正文） |
-| `docs-site/.vitepress/` | 主题（`theme/`）、`config.mts`、**`brands.ts`（多品牌）** |
+| `docs-site/.vitepress/` | 主题（`theme/`）、`config.mts`、**`brands.ts` / `brand-common.ts` / `brand-personalization.ts`（多品牌）** |
 | `docs-site/settings/` | 用户指南 Markdown |
 | `docs-site/api/` | API 参考 Markdown |
 | `docs-site/public/` | 静态资源；根路径下独立 HTML（如法律页、关于我们独立导出）会原样复制到 `dist/` |

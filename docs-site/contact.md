@@ -65,22 +65,7 @@ pageClass: td-contact-page
           <span class="td-contact__channel-v">@TD_SUPPORT_EMAIL@</span>
         </div>
       </a>
-      <div class="td-contact__channel" role="group" aria-label="QQ 客服群">
-        <div class="td-contact__channel-icon">
-          <span class="td-icon" aria-hidden="true">groups</span>
-        </div>
-        <div class="td-contact__channel-text">
-          <span class="td-contact__channel-k">QQ 客服群</span>
-          <span class="td-contact__channel-v td-contact__channel-v--qq">
-            <span class="td-contact__channel-v-qq-num">1103370311</span>
-            <a
-              href="https://qun.qq.com/universal-share/share?ac=1&authKey=gUV7ogEcA3IzuPcz2fa3u/NAPvo/DlZkd8XkuLg3GoaS7Tcq6ndnqCwbSTEYCdtf&busi_data=eyJncm91cENvZGUiOiIxMTAzMzcwMzExIiwidG9rZW4iOiJyNzNpUnZDanRJbHFUMVd1WmNFWHFQeWNHOG0zZE1oQllXQzkxWGU2TWdOWmNUbkNJdUgva0hnTWFZYW5iUEpkIiwidWluIjoiOTM1NzYzMzY3In0=&data=w4FFcLX89f32nv68biGsuKKNwqTeU2XigqdGljSk63qmVEY6E9uJE_8CVmOmMId3Md8UGguG3vdr90lPvTZI7Q&svctype=4&tempid=h5_group_info"
-              target="_blank"
-              rel="noopener noreferrer"
-            >点击入群立享优惠</a>
-          </span>
-        </div>
-      </div>
+@TD_QQ_CHANNEL_BLOCK@
     </div>
   </div>
 </section>

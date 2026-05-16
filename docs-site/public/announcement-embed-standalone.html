@@ -128,7 +128,7 @@ html.td-ann--embed .td-ann {
 <!--
   弹窗内嵌：iframe src 例如 /announcement-embed-standalone.html?embed=1
   postMessage：type 为 td-announcement-embed-height（父页需校验 origin）
-  邮箱 / QQ 与 about-contact-standalone.html 保持一致；多品牌部署时请手改或拆页。
+  邮箱 / QQ 占位符在构建时按 DOC_BRAND 替换（与 brands.ts 一致）。
 -->
 <div class="td-ann">
   <section class="td-ann__section" aria-labelledby="td-ann-promo">
@@ -152,21 +152,10 @@ html.td-ann--embed .td-ann {
       <div class="td-ann__contact-row">
         <span class="td-ann__contact-k">官方邮箱</span>
         <div class="td-ann__contact-v">
-          <a href="mailto:atomflow.vip@gmail.com">atomflow.vip@gmail.com</a>
+          <a href="mailto:@TD_SUPPORT_EMAIL@">@TD_SUPPORT_EMAIL@</a>
         </div>
       </div>
-      <div class="td-ann__contact-row">
-        <span class="td-ann__contact-k">QQ 客服群</span>
-        <div class="td-ann__contact-v">
-          <span>1103370311</span>
-          ·
-          <a
-            href="https://qun.qq.com/universal-share/share?ac=1&authKey=gUV7ogEcA3IzuPcz2fa3u/NAPvo/DlZkd8XkuLg3GoaS7Tcq6ndnqCwbSTEYCdtf&busi_data=eyJncm91cENvZGUiOiIxMTAzMzcwMzExIiwidG9rZW4iOiJyNzNpUnZDanRJbHFUMVd1WmNFWHFQeWNHOG0zZE1oQllXQzkxWGU2TWdOWmNUbkNJdUgva0hnTWFZYW5iUEpkIiwidWluIjoiOTM1NzYzMzY3In0=&data=w4FFcLX89f32nv68biGsuKKNwqTeU2XigqdGljSk63qmVEY6E9uJE_8CVmOmMId3Md8UGguG3vdr90lPvTZI7Q&svctype=4&tempid=h5_group_info"
-            target="_blank"
-            rel="noopener noreferrer"
-            >点击入群立享优惠</a>
-        </div>
-      </div>
+@TD_QQ_ANN_ROW_BLOCK@
     </div>
   </section>
 </div>

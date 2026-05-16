@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Plugin } from "vite";
@@ -16,16 +17,28 @@ import {
 
 const brand = resolveBrand(process.env.DOC_BRAND);
 
-function tdBrandMarkdownPlugin(b: BrandProfile, docsRootAbs: string): Plugin {
+/** 构建后按 DOC_BRAND 替换 public 内独立 HTML 中的 @TD_*@ 占位符 */
+const PUBLIC_BRAND_HTML = ["about-contact-standalone.html", "announcement-embed-standalone.html"] as const;
+
+function tdBrandPlaceholderPlugin(b: BrandProfile, docsRootAbs: string): Plugin {
   const rootNorm = path.resolve(docsRootAbs).split(path.sep).join("/");
+  const distDir = path.join(docsRootAbs, `.vitepress/dist-${b.id}`);
   return {
-    name: "td-brand-md-placeholders",
+    name: "td-brand-placeholders",
     enforce: "pre",
     transform(code, id) {
       if (!id.endsWith(".md")) return null;
       const idNorm = id.split(path.sep).join("/");
       if (idNorm !== rootNorm && !idNorm.startsWith(`${rootNorm}/`)) return null;
       return applyBrandPlaceholdersToMarkdown(code, b);
+    },
+    closeBundle() {
+      for (const rel of PUBLIC_BRAND_HTML) {
+        const fp = path.join(distDir, rel);
+        if (!fs.existsSync(fp)) continue;
+        const next = applyBrandPlaceholdersToMarkdown(fs.readFileSync(fp, "utf8"), b);
+        fs.writeFileSync(fp, next);
+      }
     },
   };
 }
@@ -203,7 +216,7 @@ export default defineConfig({
       __TD_MAIN_SITE__: JSON.stringify(trimOrigin(brand.mainSiteUrl)),
       __TD_API_GATEWAY_ORIGIN__: JSON.stringify(apiGatewayOrigin(brand)),
     },
-    plugins: [tdBrandMarkdownPlugin(brand, SITE)],
+    plugins: [tdBrandPlaceholderPlugin(brand, SITE)],
   },
   themeConfig: {
     logo: brand.logo,
@@ -243,6 +256,8 @@ export default defineConfig({
       portalUrl: navPortalOrigin(brand),
       registerUrl: `${trimOrigin(brand.mainSiteUrl)}/register`,
       supportEmail: brand.supportEmail,
+      qqGroup: brand.qqGroup,
+      qqGroupUrl: brand.qqGroupUrl,
       logo: brand.logo,
     },
   },
