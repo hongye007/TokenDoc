@@ -8,11 +8,8 @@ import { fileURLToPath } from "node:url";
 import type {
   BrandId,
   BrandInput,
-  BrandPersonalization,
   BrandSharedConfig,
   BrandThemePalette,
-  DisplayNameFormat,
-  NavTitleFrom,
 } from "./brand-common";
 
 const CONFIG_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "config/brands");
@@ -26,9 +23,6 @@ export interface BrandFileConfig {
   email: string;
   qqGroup?: string;
   qqGroupUrl?: string;
-  displayNameFormat?: DisplayNameFormat;
-  navTitleFrom?: NavTitleFrom;
-  overrides?: BrandPersonalization;
 }
 
 export interface BrandsIndexConfig {
@@ -81,14 +75,7 @@ export function toBrandInput(file: BrandFileConfig): BrandInput {
     email: file.email,
     qqGroup: file.qqGroup,
     qqGroupUrl: file.qqGroupUrl,
-    displayNameFormat: file.displayNameFormat,
-    navTitleFrom: file.navTitleFrom,
   };
-}
-
-export function personalizationFor(id: BrandId): BrandPersonalization {
-  const file = loadBrandConfigBundle().files.find((f) => f.id === id);
-  return file?.overrides ?? {};
 }
 
 export type { BrandSharedConfig, BrandThemePalette };

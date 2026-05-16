@@ -1,4 +1,4 @@
-# 多品牌：在云端分别构建并推送到 gh-pages-<brand> 分支（默认 atomflow、minitoken）。
+# 多品牌：按需构建并发布到 gh-pages-<brand> 分支。
 
 name: Publish static site to gh-pages
 
@@ -7,17 +7,118 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      brand:
+        description: "要构建的品牌 ID；填写 all 构建全部品牌。"
+        required: true
+        default: "all"
 
 permissions:
   contents: write
 
 jobs:
+  resolve-brands:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.resolve.outputs.matrix }}
+      brands: ${{ steps.resolve.outputs.brands }}
+      has_brands: ${{ steps.resolve.outputs.has_brands }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve brands
+        id: resolve
+        env:
+          INPUT_BRAND: ${{ github.event.inputs.brand }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const cp = require('node:child_process');
+
+          const indexPath = 'docs-site/.vitepress/config/brands/index.json';
+          const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+          const allBrands = index.brands || [];
+          for (const brand of allBrands) {
+            const file = `docs-site/.vitepress/config/brands/${brand}.json`;
+            if (!fs.existsSync(file)) throw new Error(`index.json 中的品牌缺少配置文件：${file}`);
+            const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+            if (data.id !== brand) throw new Error(`${file} 内 id="${data.id}" 与 index.json 不一致`);
+          }
+
+          function output(key, value) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`);
+          }
+
+          function uniq(values) {
+            return [...new Set(values)].filter(Boolean);
+          }
+
+          function changedFiles() {
+            const event = JSON.parse(fs.readFileSync(process.env.EVENT_PATH, 'utf8'));
+            const before = event.before;
+            const after = event.after || process.env.GITHUB_SHA;
+            if (!before || /^0+$/.test(before)) return [];
+            try {
+              return cp
+                .execFileSync('git', ['diff', '--name-only', before, after], { encoding: 'utf8' })
+                .split(/\r?\n/)
+                .filter(Boolean);
+            } catch (error) {
+              console.log(`Diff failed, build all brands: ${error.message}`);
+              return [];
+            }
+          }
+
+          let brands = [];
+          const requested = (process.env.INPUT_BRAND || '').trim().toLowerCase();
+
+          if (process.env.EVENT_NAME === 'workflow_dispatch') {
+            if (!requested || requested === 'all') {
+              brands = allBrands;
+            } else if (allBrands.includes(requested)) {
+              brands = [requested];
+            } else {
+              throw new Error(`未知品牌：${requested}。允许值：all, ${allBrands.join(', ')}`);
+            }
+          } else {
+            const files = changedFiles();
+            const brandFiles = files
+              .map((file) => file.match(/^docs-site\/\.vitepress\/config\/brands\/([^/]+)\.json$/)?.[1])
+              .filter((id) => id && id !== 'index' && id !== 'shared' && allBrands.includes(id));
+            const globalChange = files.length === 0 || files.some((file) => {
+              if (file === indexPath) return false;
+              if (file === 'docs-site/.vitepress/config/brands/shared.json') return true;
+              if (file.startsWith('docs-site/.vitepress/config/brands/')) return false;
+              return (
+                file.startsWith('docs-site/') ||
+                file.startsWith('scripts/') ||
+                file === 'package.json' ||
+                file === 'package-lock.json' ||
+                file === '.github/workflows/gh-pages.yml'
+              );
+            });
+            brands = globalChange ? allBrands : uniq(brandFiles);
+          }
+
+          brands = uniq(brands).filter((id) => allBrands.includes(id));
+          output('brands', brands.join(','));
+          output('has_brands', brands.length ? 'true' : 'false');
+          output('matrix', JSON.stringify({ brand: brands }));
+          console.log(`Resolved brands: ${brands.length ? brands.join(', ') : '(none)'}`);
+          NODE
+
   build-and-deploy:
+    needs: resolve-brands
+    if: needs.resolve-brands.outputs.has_brands == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        brand: [atomflow, minitoken]
+      matrix: ${{ fromJSON(needs.resolve-brands.outputs.matrix) }}
     concurrency:
       group: gh-pages-${{ matrix.brand }}
       cancel-in-progress: true
@@ -46,3 +147,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs-site/.vitepress/dist-${{ matrix.brand }}
           publish_branch: gh-pages-${{ matrix.brand }}
+
+      - name: Build summary
+        run: |
+          {
+            echo "### TokenDoc published"
+            echo ""
+            echo "- Brand: \`${{ matrix.brand }}\`"
+            echo "- Branch: \`gh-pages-${{ matrix.brand }}\`"
+            echo "- Source SHA: \`${{ github.sha }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

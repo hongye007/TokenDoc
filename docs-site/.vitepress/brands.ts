@@ -10,29 +10,21 @@ import {
   buildFooterLegalText,
   domainFromMainSite,
   formatDisplayName,
-  resolveNavTitle,
   siteTitleHtml,
   type BrandId,
-  type BrandPersonalization,
   type BrandSharedConfig,
   type BrandThemePalette,
-  type DisplayNameFormat,
-  type NavTitleFrom,
 } from "./brand-common";
 import {
   brandIds,
   defaultBrandId,
   loadBrandConfigBundle,
-  personalizationFor,
   toBrandInput,
 } from "./load-brand-config";
 
 export type {
   BrandId,
-  BrandPersonalization,
   BrandThemePalette,
-  DisplayNameFormat,
-  NavTitleFrom,
 } from "./brand-common";
 
 export interface BrandScreenshots {
@@ -50,8 +42,6 @@ export interface BrandInput {
   email: string;
   qqGroup?: string;
   qqGroupUrl?: string;
-  displayNameFormat?: DisplayNameFormat;
-  navTitleFrom?: NavTitleFrom;
 }
 
 export interface BrandProfile {
@@ -77,22 +67,18 @@ export interface BrandProfile {
   footerCopyright: string;
 }
 
-const DEFAULT_DISPLAY_FORMAT: DisplayNameFormat = "enParenZh";
-const DEFAULT_NAV_FROM: NavTitleFrom = "nameEn";
-
 function sharedConfig(): BrandSharedConfig {
   return loadBrandConfigBundle().shared;
 }
 
 function resolveQqContact(
   input: BrandInput,
-  p: BrandPersonalization,
   shared: BrandSharedConfig,
 ): Pick<BrandProfile, "qqGroup" | "qqGroupUrl"> {
-  const groupRaw = input.qqGroup ?? p.qqGroup ?? shared.defaultQqGroup;
+  const groupRaw = input.qqGroup ?? shared.defaultQqGroup;
   const group = groupRaw.trim();
   if (!group) return {};
-  const urlRaw = input.qqGroupUrl ?? p.qqGroupUrl ?? shared.defaultQqGroupUrl;
+  const urlRaw = input.qqGroupUrl ?? shared.defaultQqGroupUrl;
   const url = urlRaw.trim();
   return {
     qqGroup: group,
@@ -144,44 +130,31 @@ export function buildAnnouncementQqRowBlock(b: BrandProfile): string {
 
 function buildBrandProfile(input: BrandInput): BrandProfile {
   const shared = sharedConfig();
-  const p = personalizationFor(input.id);
   const mainSiteUrl = trimOrigin(input.mainSiteUrl);
   const domainLabel = domainFromMainSite(mainSiteUrl);
   const apiGatewayUrl = apiOriginFromMainSite(mainSiteUrl);
-  const displayName =
-    p.displayName ??
-    formatDisplayName(
-      input.displayNameFormat ?? DEFAULT_DISPLAY_FORMAT,
-      input.nameEn,
-      input.nameZh,
-    );
-  const navTitle =
-    p.navTitle ?? resolveNavTitle(input.navTitleFrom ?? DEFAULT_NAV_FROM, input.nameEn, input.nameZh);
+  const displayName = formatDisplayName(input.nameEn, input.nameZh);
 
   return {
     id: input.id,
     nameZh: input.nameZh,
     nameEn: input.nameEn,
-    siteTitleHtml: siteTitleHtml(navTitle),
-    docTitle: p.docTitle ?? `${input.nameEn} 文档`,
-    metaDescription: p.metaDescription ?? shared.defaultMetaDescription,
+    siteTitleHtml: siteTitleHtml(input.nameEn),
+    docTitle: `${input.nameEn} 文档`,
+    metaDescription: shared.defaultMetaDescription,
     logo: input.logo,
     displayName,
-    apiProductTableLabel:
-      p.apiProductTableLabel ??
-      (input.displayNameFormat === "enSpaceZh"
-        ? `${displayName} API (本站)`
-        : `${input.nameEn} API (本站)`),
+    apiProductTableLabel: `${input.nameEn} API (本站)`,
     domainLabel,
     mainSiteUrl,
     apiGatewayUrl,
     portalUrl: mainSiteUrl,
     supportEmail: input.email,
-    ...resolveQqContact(input, p, shared),
+    ...resolveQqContact(input, shared),
     screenshots: { ...shared.screenshots },
-    theme: p.theme ?? shared.defaultTheme,
+    theme: shared.defaultTheme,
     footerLegalText: buildFooterLegalText(displayName, shared.legalBody),
-    footerCopyright: p.footerCopyright ?? `© 2026 ${input.nameEn}.${input.nameZh}`,
+    footerCopyright: `© 2026 ${input.nameEn}.${input.nameZh}`,
   };
 }
 
