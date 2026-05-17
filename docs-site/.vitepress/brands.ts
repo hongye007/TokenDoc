@@ -78,7 +78,7 @@ function resolveQqContact(
   const groupRaw = input.qqGroup ?? shared.defaultQqGroup;
   const group = groupRaw.trim();
   if (!group) return {};
-  const urlRaw = input.qqGroupUrl ?? shared.defaultQqGroupUrl;
+  const urlRaw = input.qqGroupUrl ?? "";
   const url = urlRaw.trim();
   return {
     qqGroup: group,
