@@ -22,7 +22,7 @@ aside: false
     <div class="td-lp-new-slab td-lp-new-slab--hero">
       <span class="td-icon td-lp-new__hero-icon" aria-hidden="true">redeem</span>
       <h3 class="td-lp-new__headline-lg">新用户礼遇</h3>
-      <p class="td-lp-new__body-lg td-lp-new__muted">🎁 新用户注册送 <strong class="td-lp-new__primary-text">10 刀</strong> 消费额度</p>
+      <p class="td-lp-new__body-lg td-lp-new__muted">🎁 新用户注册送 <strong class="td-lp-new__primary-text">超值</strong> 消费额度</p>
       <a class="td-lp-new__btn-primary" href="@TD_REGISTER_URL@" target="_blank" rel="noopener noreferrer">
         注册入口 <span class="td-icon td-lp-new__btn-icon" aria-hidden="true">arrow_forward</span>
       </a>
