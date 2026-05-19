@@ -200,6 +200,7 @@ export default defineConfig({
   head: [
     ["meta", { name: "theme-color", content: themeColorDark, media: "(prefers-color-scheme: dark)" }],
     ["meta", { name: "theme-color", content: themeColorLight, media: "(prefers-color-scheme: light)" }],
+    ["link", { rel: "icon", type: "image/png", href: brand.logo }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
       "link",
