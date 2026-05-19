@@ -144,6 +144,12 @@ const settingsSidebarItems: DefaultTheme.SidebarItem[] = [
   { text: "任务日志", link: "/settings/user/task" },
 ];
 
+const toolsSidebarItems: DefaultTheme.SidebarItem[] = [
+  { text: "cc-switch 配置接入", link: "/tools/cc-switch" },
+  { text: "claude 配置接入", link: "/tools/claude-code" },
+  { text: "codex 配置接入", link: "/tools/codex" },
+];
+
 const sidebarShowFaq = true;
 const navShowGithubSocial = false;
 
@@ -159,6 +165,11 @@ const docSidebar: DefaultTheme.SidebarItem[] = [
     text: "API参考",
     collapsed: false,
     items: apiItems,
+  },
+  {
+    text: "工具集成",
+    collapsed: false,
+    items: toolsSidebarItems,
   },
   ...(sidebarShowFaq ? [{ text: "常见问题", link: "/faq" } satisfies DefaultTheme.SidebarItem] : []),
 ];
@@ -237,6 +248,7 @@ export default defineConfig({
       "/quickstart": sidebarForDocs,
       "/settings/": sidebarForDocs,
       "/api/": sidebarForDocs,
+      "/tools/": sidebarForDocs,
       "/faq": sidebarForDocs,
     },
     socialLinks: navShowGithubSocial
