@@ -148,6 +148,8 @@ const toolsSidebarItems: DefaultTheme.SidebarItem[] = [
   { text: "cc-switch 配置接入", link: "/tools/cc-switch" },
   { text: "claude 配置接入", link: "/tools/claude-code" },
   { text: "codex 配置接入", link: "/tools/codex" },
+  { text: "vs code 配置接入", link: "/tools/vscode" },
+  { text: "其他工具配置接入", link: "/tools/other-tools" },
 ];
 
 const sidebarShowFaq = true;
