@@ -3,7 +3,8 @@
     "astralink",
     "atomflow",
     "console",
-    "minitoken"
+    "minitoken",
+    "omniroute"
   ],
   "defaultBrand": "atomflow"
 }
