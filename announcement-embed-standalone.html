@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>优惠活动与联系我们</title>
+<meta name="description" content="优惠活动与联系我们，可嵌入公告弹窗（iframe）。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+<style>
+:root {
+  --td-ann-bg: #131315;
+  --td-ann-surface: #1f1f21;
+  --td-ann-text: #e4e2e4;
+  --td-ann-muted: #a1a1aa;
+  --td-ann-accent: #0057ff;
+  --td-ann-accent-soft: rgba(0, 87, 255, 0.14);
+  --td-ann-border: rgba(228, 226, 228, 0.1);
+  --td-ann-font: Inter, ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+html,
+body {
+  margin: 0;
+  background: var(--td-ann-bg);
+  color: var(--td-ann-text);
+  font-family: var(--td-ann-font);
+  -webkit-font-smoothing: antialiased;
+}
+.td-ann {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 1.75rem;
+  box-sizing: border-box;
+}
+html.td-ann--embed .td-ann {
+  padding: 1rem 1rem 1.25rem;
+}
+.td-ann__section {
+  margin-bottom: 1.25rem;
+}
+.td-ann__section:last-of-type {
+  margin-bottom: 0;
+}
+.td-ann__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--td-ann-accent);
+  margin: 0 0 0.65rem;
+}
+.td-ann__label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--td-ann-accent);
+  opacity: 0.9;
+}
+.td-ann__card {
+  background: var(--td-ann-surface);
+  border: 1px solid var(--td-ann-border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.td-ann__card p {
+  margin: 0 0 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--td-ann-muted);
+}
+.td-ann__card p:last-child {
+  margin-bottom: 0;
+}
+.td-ann__card strong {
+  color: var(--td-ann-text);
+  font-weight: 600;
+}
+.td-ann__badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  background: var(--td-ann-accent-soft);
+  color: #b6c4ff;
+  margin-bottom: 0.5rem;
+}
+.td-ann__contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--td-ann-border);
+}
+.td-ann__contact-row:first-child {
+  padding-top: 0;
+}
+.td-ann__contact-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.td-ann__contact-k {
+  flex: 0 0 4.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--td-ann-muted);
+}
+.td-ann__contact-v {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--td-ann-text);
+  word-break: break-all;
+}
+.td-ann__contact-v a {
+  color: var(--td-ann-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.td-ann__contact-v a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<!--
+  弹窗内嵌：iframe src 例如 /announcement-embed-standalone.html?embed=1
+  postMessage：type 为 td-announcement-embed-height（父页需校验 origin）
+  邮箱 / QQ 占位符在构建时按 DOC_BRAND 替换（与 brands.ts 一致）。
+-->
+<div class="td-ann">
+  <section class="td-ann__section" aria-labelledby="td-ann-promo">
+    <h2 id="td-ann-promo" class="td-ann__label">
+      <span class="td-ann__label-dot" aria-hidden="true"></span>
+      优惠活动
+    </h2>
+    <div class="td-ann__card">
+      <span class="td-ann__badge">进行中</span>
+      <p><strong>新用户礼遇</strong>：新注册用户可获平台赠送消费额度，<strong>额度为10刀永久新人体验礼</strong>🎁</p>
+      <p><strong>邀请奖励</strong>：<strong>10% 邀请充值奖励</strong>。</p>
+    </div>
+  </section>
+
+  <section class="td-ann__section" aria-labelledby="td-ann-contact">
+    <h2 id="td-ann-contact" class="td-ann__label">
+      <span class="td-ann__label-dot" aria-hidden="true"></span>
+      联系我们
+    </h2>
+    <div class="td-ann__card">
+      <div class="td-ann__contact-row">
+        <span class="td-ann__contact-k">官方邮箱</span>
+        <div class="td-ann__contact-v">
+          <a href="mailto:448499568@qq.com">448499568@qq.com</a>
+        </div>
+      </div>
+      <div class="td-ann__contact-row">
+        <span class="td-ann__contact-k">QQ 客服群</span>
+        <div class="td-ann__contact-v">
+          <span>QQ: 448499568</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  try {
+    if (window.self !== window.top || /(?:^|[?&])embed=1(?:&|$)/.test(location.search)) {
+      document.documentElement.classList.add("td-ann--embed");
+    }
+  } catch (e) {
+    document.documentElement.classList.add("td-ann--embed");
+  }
+  function postHeight() {
+    if (window.parent === window) return;
+    try {
+      var h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      window.parent.postMessage({ type: "td-announcement-embed-height", height: h }, "*");
+    } catch (err) {}
+  }
+  window.addEventListener("load", postHeight);
+  window.addEventListener("resize", postHeight);
+  if (typeof ResizeObserver !== "undefined" && document.body) {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+  setTimeout(postHeight, 50);
+})();
+</script>
+</body>
+</html>
